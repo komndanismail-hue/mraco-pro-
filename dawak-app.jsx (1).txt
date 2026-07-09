@@ -1,0 +1,1229 @@
+import { useState, useEffect } from "react";
+
+// ─── دواك برو — قاعدة البيانات: 55 صيدلية (الخرطوم - بحري - أم درمان) ───
+const PHARMACIES = [
+ {
+  "id": "p1",
+  "name": "صيدلية يونيفورم",
+  "phone": "0901744008",
+  "wa": "249901744008",
+  "lat": 15.553338,
+  "lng": 32.538453,
+  "area": "الخرطوم",
+  "map": "https://maps.app.goo.gl/KS2Y9G65xZcPcTei8"
+ },
+ {
+  "id": "p2",
+  "name": "صيدلية عزلة الطبية",
+  "phone": "0116359456",
+  "wa": "249116359456",
+  "lat": 15.538713,
+  "lng": 32.525578,
+  "area": "جبرة",
+  "map": "https://maps.app.goo.gl/XLBK2yMzFmgghW9c8"
+ },
+ {
+  "id": "p3",
+  "name": "صيدلية أوليف",
+  "phone": "0912329765",
+  "wa": "249912329765",
+  "lat": 15.571438,
+  "lng": 32.543187,
+  "area": "",
+  "map": "https://maps.app.goo.gl/nDcG8FGfRJU13xiu8"
+ },
+ {
+  "id": "p4",
+  "name": "صيدلية د. أحمد عثمان",
+  "phone": "0917870215",
+  "wa": "249917870215",
+  "lat": 15.544438,
+  "lng": 32.540312,
+  "area": "",
+  "map": "https://maps.app.goo.gl/3rkic7jYZyKR7t3Q9"
+ },
+ {
+  "id": "p5",
+  "name": "صيدلية زون 117",
+  "phone": "0924958664",
+  "wa": "249924958664",
+  "lat": null,
+  "lng": null,
+  "area": "الرياض - شارع 117",
+  "map": "https://maps.app.goo.gl/Mmt8GRps5aeEaNvZ8"
+ },
+ {
+  "id": "p6",
+  "name": "صيدلية أبو خالد",
+  "phone": "0122309827",
+  "wa": "249122309827",
+  "lat": 15.565188,
+  "lng": 32.546062,
+  "area": "",
+  "map": "https://maps.app.goo.gl/MqvqwmMrFt4P9YE16"
+ },
+ {
+  "id": "p7",
+  "name": "صيدلية أسيد",
+  "phone": "096168868",
+  "wa": "",
+  "lat": null,
+  "lng": null,
+  "area": "",
+  "map": ""
+ },
+ {
+  "id": "p8",
+  "name": "صيدلية الأثير",
+  "phone": "0912801554",
+  "wa": "249912801554",
+  "lat": 15.538187,
+  "lng": 32.551187,
+  "area": "",
+  "map": "https://maps.app.goo.gl/gDi2PejqPv6V5zRTA"
+ },
+ {
+  "id": "p9",
+  "name": "صيدلية الأحلام",
+  "phone": "0912355463",
+  "wa": "249912355463",
+  "lat": 15.548063,
+  "lng": 32.528063,
+  "area": "",
+  "map": "https://maps.app.goo.gl/ZvZnxya5e3HYuxwb8"
+ },
+ {
+  "id": "p10",
+  "name": "صيدلية الإدريسي",
+  "phone": "0912207009",
+  "wa": "249912207009",
+  "lat": null,
+  "lng": null,
+  "area": "",
+  "map": ""
+ },
+ {
+  "id": "p11",
+  "name": "صيدلية التويم",
+  "phone": "09121224236",
+  "wa": "",
+  "lat": 15.697938,
+  "lng": 32.522937,
+  "area": "بحري",
+  "map": "https://maps.app.goo.gl/uYUyRAVXMyXYwbii9"
+ },
+ {
+  "id": "p12",
+  "name": "صيدلية الراشدين",
+  "phone": "0925435080",
+  "wa": "249925435080",
+  "lat": 15.476938,
+  "lng": 32.533312,
+  "area": "",
+  "map": "https://maps.app.goo.gl/2issAqHG6bCDjQCZ6"
+ },
+ {
+  "id": "p13",
+  "name": "صيدلية السامراب",
+  "phone": "0912862671",
+  "wa": "249912862671",
+  "lat": 15.700687,
+  "lng": 32.521438,
+  "area": "السامراب - بحري",
+  "map": "https://maps.app.goo.gl/VpkVY2U1tjXn9cRp8"
+ },
+ {
+  "id": "p14",
+  "name": "صيدلية السلمة",
+  "phone": "0923046447",
+  "wa": "249923046447",
+  "lat": 15.448438,
+  "lng": 32.544062,
+  "area": "",
+  "map": "https://maps.app.goo.gl/JsSFDMccegKQ6QZLA"
+ },
+ {
+  "id": "p15",
+  "name": "صيدلية السديس",
+  "phone": "0993287586",
+  "wa": "249993287586",
+  "lat": 15.522563,
+  "lng": 32.554562,
+  "area": "",
+  "map": "https://maps.app.goo.gl/Xeht7w66sQ6m3PXY7"
+ },
+ {
+  "id": "p16",
+  "name": "صيدلية السيدة نعمة",
+  "phone": "0128444063",
+  "wa": "249128444063",
+  "lat": 15.558563,
+  "lng": 32.551187,
+  "area": "",
+  "map": "https://maps.app.goo.gl/zaKterNKVLYLYUhWA"
+ },
+ {
+  "id": "p17",
+  "name": "صيدلية السيسي",
+  "phone": "0912304697",
+  "wa": "249912304697",
+  "lat": 15.652238,
+  "lng": 32.612953,
+  "area": "بحري",
+  "map": "https://maps.app.goo.gl/RKFn5G35DQRLTXF28"
+ },
+ {
+  "id": "p18",
+  "name": "صيدلية الشرقي",
+  "phone": "0919999595",
+  "wa": "249919999595",
+  "lat": 15.550938,
+  "lng": 32.600563,
+  "area": "شرق النيل",
+  "map": "https://maps.app.goo.gl/b7LSCGxhidzT8RUJ9"
+ },
+ {
+  "id": "p19",
+  "name": "صيدلية العشرة",
+  "phone": "0906271457",
+  "wa": "249906271457",
+  "lat": 15.493063,
+  "lng": 32.565312,
+  "area": "",
+  "map": "https://maps.app.goo.gl/CPphLJ6ktx7fczyU6"
+ },
+ {
+  "id": "p20",
+  "name": "صيدلية الفاروق",
+  "phone": "0922578378",
+  "wa": "249922578378",
+  "lat": 15.509938,
+  "lng": 32.615063,
+  "area": "",
+  "map": "https://maps.app.goo.gl/ubmSW5QVAN1nfoUt7"
+ },
+ {
+  "id": "p21",
+  "name": "صيدلية الفاروق 2",
+  "phone": "0914449254",
+  "wa": "249914449254",
+  "lat": 15.520312,
+  "lng": 32.604187,
+  "area": "",
+  "map": "https://maps.app.goo.gl/htZ4u7Gzj7MxFzdS6"
+ },
+ {
+  "id": "p22",
+  "name": "صيدلية الفريق",
+  "phone": "0912587705",
+  "wa": "249912587705",
+  "lat": 15.598187,
+  "lng": 32.511937,
+  "area": "",
+  "map": "https://maps.app.goo.gl/v6jQ2ULgrJvSnMhE6"
+ },
+ {
+  "id": "p23",
+  "name": "صيدلية الكناري",
+  "phone": "0904078660",
+  "wa": "249904078660",
+  "lat": 15.532187,
+  "lng": 32.536062,
+  "area": "",
+  "map": "https://maps.app.goo.gl/h1KNttsWPG93fyci7"
+ },
+ {
+  "id": "p24",
+  "name": "صيدلية المالديف",
+  "phone": "0917338346",
+  "wa": "249917338346",
+  "lat": 15.551938,
+  "lng": 32.555937,
+  "area": "",
+  "map": "https://maps.app.goo.gl/3rDeb82kcNMCMLdq9"
+ },
+ {
+  "id": "p25",
+  "name": "صيدلية المتطورة",
+  "phone": "0913531731",
+  "wa": "249913531731",
+  "lat": 15.510813,
+  "lng": 32.549687,
+  "area": "",
+  "map": "https://maps.app.goo.gl/pRR9ur5v6GkYmH5bA"
+ },
+ {
+  "id": "p26",
+  "name": "صيدلية النخبة",
+  "phone": "0915533330",
+  "wa": "249915533330",
+  "lat": 15.570188,
+  "lng": 32.536312,
+  "area": "",
+  "map": "https://maps.app.goo.gl/VsArj2BzMBJKte4VA"
+ },
+ {
+  "id": "p27",
+  "name": "صيدلية أواصر",
+  "phone": "0126425808",
+  "wa": "249126425808",
+  "lat": 15.488187,
+  "lng": 32.544812,
+  "area": "",
+  "map": "https://maps.app.goo.gl/ZYNN5wsC3VATQQH1A"
+ },
+ {
+  "id": "p28",
+  "name": "صيدلية All in One",
+  "phone": "0911313699",
+  "wa": "249911313699",
+  "lat": null,
+  "lng": null,
+  "area": "شارع عبيد ختم",
+  "map": "https://maps.app.goo.gl/o3ywFYFW4niuEnei9"
+ },
+ {
+  "id": "p29",
+  "name": "صيدلية بايونير",
+  "phone": "0919398174",
+  "wa": "249919398174",
+  "lat": 15.529188,
+  "lng": 32.563312,
+  "area": "",
+  "map": "https://maps.app.goo.gl/fpkcathZt4RWL8Df9"
+ },
+ {
+  "id": "p30",
+  "name": "صيدلية برانكو",
+  "phone": "0909866939",
+  "wa": "249909866939",
+  "lat": 15.562438,
+  "lng": 32.520437,
+  "area": "",
+  "map": "https://maps.app.goo.gl/pVQzEYBga2wyp5Ch6"
+ },
+ {
+  "id": "p31",
+  "name": "صيدلية بلادي",
+  "phone": "0919509067",
+  "wa": "249919509067",
+  "lat": 15.517563,
+  "lng": 32.624063,
+  "area": "",
+  "map": "https://maps.app.goo.gl/5hTCSUfY14Rib2PZ8"
+ },
+ {
+  "id": "p32",
+  "name": "صيدلية ابن اليمان",
+  "phone": "0912935798",
+  "wa": "249912935798",
+  "lat": 15.546437,
+  "lng": 32.521687,
+  "area": "",
+  "map": "https://maps.app.goo.gl/BQghqYgXAUy3UjhRA"
+ },
+ {
+  "id": "p33",
+  "name": "صيدلية بيتنا",
+  "phone": "0123858998",
+  "wa": "249123858998",
+  "lat": 15.467187,
+  "lng": 32.542437,
+  "area": "",
+  "map": "https://maps.app.goo.gl/Jr27ZAMSbYHqqkkAA"
+ },
+ {
+  "id": "p34",
+  "name": "صيدلية جبرة الحديثة",
+  "phone": "0129313272",
+  "wa": "249129313272",
+  "lat": 15.536062,
+  "lng": 32.518187,
+  "area": "جبرة",
+  "map": "https://maps.app.goo.gl/1kbuMJJv8PZUnRZv5"
+ },
+ {
+  "id": "p35",
+  "name": "صيدلية د. سلمى",
+  "phone": "0114507175",
+  "wa": "249114507175",
+  "lat": 15.534438,
+  "lng": 32.530563,
+  "area": "",
+  "map": "https://maps.app.goo.gl/SShHzoswc1d6FVxA8"
+ },
+ {
+  "id": "p36",
+  "name": "صيدلية دار المفتي",
+  "phone": "0912460084",
+  "wa": "249912460084",
+  "lat": 15.550813,
+  "lng": 32.529563,
+  "area": "",
+  "map": "https://maps.app.goo.gl/WHXgb6GLXy8PqSUv7"
+ },
+ {
+  "id": "p37",
+  "name": "صيدلية ديدي",
+  "phone": "0912493203",
+  "wa": "249912493203",
+  "lat": 15.520563,
+  "lng": 32.567687,
+  "area": "",
+  "map": "https://maps.app.goo.gl/6Vsnfp2PmdRMLvd36"
+ },
+ {
+  "id": "p38",
+  "name": "صيدلية روسلين",
+  "phone": "0917775113",
+  "wa": "249917775113",
+  "lat": 15.576063,
+  "lng": 32.549812,
+  "area": "",
+  "map": "https://maps.app.goo.gl/DBKkFrj85A1gbWj97"
+ },
+ {
+  "id": "p39",
+  "name": "صيدلية رويال",
+  "phone": "0912600028",
+  "wa": "249912600028",
+  "lat": 15.514938,
+  "lng": 32.538688,
+  "area": "",
+  "map": "https://maps.app.goo.gl/e1und6VTwcm3Upw38"
+ },
+ {
+  "id": "p40",
+  "name": "صيدلية رويال كير",
+  "phone": "0114644148",
+  "wa": "249114644148",
+  "lat": null,
+  "lng": null,
+  "area": "",
+  "map": ""
+ },
+ {
+  "id": "p41",
+  "name": "صيدلية رودس",
+  "phone": "0122038098",
+  "wa": "249122038098",
+  "lat": 15.547562,
+  "lng": 32.556062,
+  "area": "",
+  "map": "https://maps.app.goo.gl/UKy4xo49nPeWruaH6"
+ },
+ {
+  "id": "p42",
+  "name": "صيدلية سدرة",
+  "phone": "0912164422",
+  "wa": "249912164422",
+  "lat": 15.554188,
+  "lng": 32.560687,
+  "area": "",
+  "map": "https://maps.app.goo.gl/bsiBZUxarG4cGTba6"
+ },
+ {
+  "id": "p43",
+  "name": "صيدلية سمارا",
+  "phone": "0911449464",
+  "wa": "249911449464",
+  "lat": 15.527063,
+  "lng": 32.613438,
+  "area": "",
+  "map": "https://maps.app.goo.gl/ptTV2aSCHQVKEPTb9"
+ },
+ {
+  "id": "p44",
+  "name": "صيدلية سند",
+  "phone": "0915490669",
+  "wa": "249915490669",
+  "lat": 15.497812,
+  "lng": 32.533938,
+  "area": "",
+  "map": "https://maps.app.goo.gl/XmbAzo2tkVqM7uuq8"
+ },
+ {
+  "id": "p45",
+  "name": "صيدلية سوبر كير",
+  "phone": "0123068660",
+  "wa": "249123068660",
+  "lat": 15.521812,
+  "lng": 32.549812,
+  "area": "",
+  "map": "https://maps.app.goo.gl/fJEgpgfmCX7r5A5c6"
+ },
+ {
+  "id": "p46",
+  "name": "صيدلية شارع جوبا",
+  "phone": "0912390756",
+  "wa": "249912390756",
+  "lat": 15.483313,
+  "lng": 32.551312,
+  "area": "",
+  "map": "https://maps.app.goo.gl/HcFFNgcPs7yWbbcV7"
+ },
+ {
+  "id": "p47",
+  "name": "صيدلية شلال",
+  "phone": "0996772261",
+  "wa": "249996772261",
+  "lat": 15.569688,
+  "lng": 32.530313,
+  "area": "",
+  "map": "https://maps.app.goo.gl/ANxtQx2aMAh3xfMD8"
+ },
+ {
+  "id": "p48",
+  "name": "صيدلية لورين",
+  "phone": "0927097507",
+  "wa": "249927097507",
+  "lat": 15.511563,
+  "lng": 32.556687,
+  "area": "",
+  "map": "https://maps.app.goo.gl/hnp4ph1nKG5rcXwN9"
+ },
+ {
+  "id": "p49",
+  "name": "صيدلية ولي العهد",
+  "phone": "0123447480",
+  "wa": "249123447480",
+  "lat": 15.593188,
+  "lng": 32.524437,
+  "area": "",
+  "map": "https://maps.app.goo.gl/j5ewFFLuebmmnzWz7"
+ },
+ {
+  "id": "p50",
+  "name": "صيدلية يونيفورم (فرع 2)",
+  "phone": "0901744008",
+  "wa": "249901744008",
+  "lat": 15.541187,
+  "lng": 32.597687,
+  "area": "",
+  "map": "https://maps.app.goo.gl/W2BTCcxxg2NWRMNx7"
+ },
+ {
+  "id": "p51",
+  "name": "صيدلية Corna",
+  "phone": "0118514133",
+  "wa": "249118514133",
+  "lat": 15.529438,
+  "lng": 32.543312,
+  "area": "",
+  "map": "https://maps.app.goo.gl/vAnzMxDqQ9YDdDoP6"
+ },
+ {
+  "id": "p52",
+  "name": "صيدلية وهبة",
+  "phone": "0127931541",
+  "wa": "249127931541",
+  "lat": null,
+  "lng": null,
+  "area": "الرابط المرسل يعود لصيدلية Corna",
+  "map": ""
+ },
+ {
+  "id": "p53",
+  "name": "صيدلية مقرسم",
+  "phone": "0115435780",
+  "wa": "249115435780",
+  "lat": 15.555688,
+  "lng": 32.534812,
+  "area": "",
+  "map": "https://maps.app.goo.gl/wpe4KJp8QQ3jfupW8"
+ },
+ {
+  "id": "p54",
+  "name": "صيدلية مضوي",
+  "phone": "0960047999",
+  "wa": "249960047999",
+  "lat": 15.502438,
+  "lng": 32.571188,
+  "area": "",
+  "map": "https://maps.app.goo.gl/VMdTv7ZCYbkzZj5o8"
+ },
+ {
+  "id": "p55",
+  "name": "صيدلية نهى",
+  "phone": "0901236199",
+  "wa": "249901236199",
+  "lat": 15.673788,
+  "lng": 32.494328,
+  "area": "الروضة - أم درمان",
+  "map": "https://maps.app.goo.gl/xdX7vw8Crndi3BMZ7"
+ }
+];
+
+const AREAS = [
+  { name: "العمارات", lat: 15.5636, lng: 32.5599 }, { name: "الرياض", lat: 15.5731, lng: 32.5764 },
+  { name: "بري", lat: 15.6011, lng: 32.5822 }, { name: "الخرطوم 2", lat: 15.5822, lng: 32.545 },
+  { name: "السوق العربي", lat: 15.5921, lng: 32.5299 }, { name: "جبرة", lat: 15.5231, lng: 32.5321 },
+  { name: "الصحافة", lat: 15.5344, lng: 32.5488 }, { name: "أركويت", lat: 15.5488, lng: 32.5677 },
+  { name: "المعمورة", lat: 15.5266, lng: 32.5744 }, { name: "الكلاكلة", lat: 15.4811, lng: 32.5122 },
+  { name: "اللاماب", lat: 15.5389, lng: 32.5211 }, { name: "الطائف", lat: 15.5711, lng: 32.5933 },
+  { name: "بحري - المزاد", lat: 15.6455, lng: 32.5322 }, { name: "بحري - السامراب", lat: 15.6899, lng: 32.5266 },
+  { name: "بحري - الحلفايا", lat: 15.6644, lng: 32.5455 }, { name: "أم درمان - الروضة", lat: 15.6733, lng: 32.4922 },
+  { name: "أم درمان - العرضة", lat: 15.6355, lng: 32.4788 }, { name: "أم درمان - الثورة", lat: 15.6633, lng: 32.4611 },
+];
+
+function distKm(a, b) {
+  const R = 6371, dLat = ((b.lat - a.lat) * Math.PI) / 180, dLng = ((b.lng - a.lng) * Math.PI) / 180;
+  const s = Math.sin(dLat / 2) ** 2 + Math.cos((a.lat * Math.PI) / 180) * Math.cos((b.lat * Math.PI) / 180) * Math.sin(dLng / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(s), Math.sqrt(1 - s));
+}
+const today = () => new Date().toISOString().slice(0, 10);
+
+// ─── تحويل موقع من خرائط قوقل (Plus Code أو إحداثيات) بدون خدمات قوقل ───
+const OLC_A = "23456789CFGHJMPQRVWX";
+function olcEncode(lat, lng, len = 10) {
+  let la = lat + 90, lo = lng + 180, code = "", res = 20;
+  for (let i = 0; i < len / 2; i++) {
+    code += OLC_A[Math.floor(la / res)] + OLC_A[Math.floor(lo / res)];
+    la %= res; lo %= res; res /= 20;
+  }
+  return code;
+}
+function olcDecode(code) {
+  code = code.toUpperCase().replace("+", "");
+  let lat = -90, lng = -180, res = 20;
+  for (let i = 0; i + 1 < Math.min(code.length, 10); i += 2) {
+    lat += OLC_A.indexOf(code[i]) * res;
+    lng += OLC_A.indexOf(code[i + 1]) * res;
+    res /= 20;
+  }
+  res *= 20;
+  if (code.length > 10) {
+    const g = OLC_A.indexOf(code[10]);
+    lat += Math.floor(g / 4) * (res / 5); lng += (g % 4) * (res / 4);
+    return { lat: lat + res / 10, lng: lng + res / 8 };
+  }
+  return { lat: lat + res / 2, lng: lng + res / 2 };
+}
+function parseLocation(text) {
+  text = (text || "").trim();
+  // إحداثيات مباشرة: 15.5533, 32.5384
+  const m = text.match(/(-?\d{1,2}\.\d+)[,\s]+(-?\d{1,3}\.\d+)/);
+  if (m) return { lat: parseFloat(m[1]), lng: parseFloat(m[2]) };
+  // رمز Plus Code: كامل أو مختصر (مثل HG3Q+89 الخرطوم)
+  const pm = text.match(/([23456789CFGHJMPQRVWX]{2,8}\+[23456789CFGHJMPQRVWX]{2,3})/i);
+  if (pm) {
+    let code = pm[1].toUpperCase();
+    const before = code.split("+")[0];
+    if (before.length < 8) code = olcEncode(15.58, 32.53, 10).slice(0, 8 - before.length) + code;
+    return olcDecode(code);
+  }
+  return null;
+}
+const inKhartoum = (c) => c && c.lat > 15.2 && c.lat < 15.95 && c.lng > 32.2 && c.lng < 32.85;
+
+const STATUS = {
+  pending: { label: "بانتظار رد الصيدلية", color: "#B96A00", bg: "#FDF1DE" },
+  available: { label: "الدواء متوفر ✓", color: "#0E7A5F", bg: "#E3F3EC" },
+  unavailable: { label: "غير متوفر", color: "#A33A3A", bg: "#FBE9E9" },
+  delivering: { label: "في الطريق إليك 🛵", color: "#1D5FA8", bg: "#E6F0FB" },
+};
+
+export default function DawakPro() {
+  const [mode, setMode] = useState("client");
+  const [requests, setRequests] = useState([]);
+  const [extra, setExtra] = useState([]);
+  const [apps, setApps] = useState([]);
+  const [shifts, setShifts] = useState([]);
+  const [profile, setProfile] = useState(null);
+  const [pharmProfile, setPharmProfile] = useState(null);
+  const [loaded, setLoaded] = useState(false);
+
+  // العميل
+  const [area, setArea] = useState("");
+  const [drug, setDrug] = useState("");
+  const [note, setNote] = useState("");
+  const [address, setAddress] = useState("");
+  const [selected, setSelected] = useState([]);
+  const [sent, setSent] = useState(false);
+  const [showAll, setShowAll] = useState(false);
+  const [photo, setPhoto] = useState(null);
+  const [isRx, setIsRx] = useState(false);
+  const [aiBusy, setAiBusy] = useState(false);
+  const [viewImg, setViewImg] = useState(null);
+  const [customLoc, setCustomLoc] = useState(null);
+  const [locInput, setLocInput] = useState("");
+  const [gpsBusy, setGpsBusy] = useState(false);
+
+  // نماذج التسجيل
+  const [regName, setRegName] = useState("");
+  const [regPhone, setRegPhone] = useState("");
+  const [claimId, setClaimId] = useState("");
+  const [joinMode, setJoinMode] = useState(false);
+  const [joinName, setJoinName] = useState("");
+  const [joinPhone, setJoinPhone] = useState("");
+  const [joinArea, setJoinArea] = useState("");
+  const [joinLink, setJoinLink] = useState("");
+  const [joinSent, setJoinSent] = useState(false);
+
+  // الإدارة
+  const [pin, setPin] = useState("");
+  const [adminOk, setAdminOk] = useState(false);
+  const [savedPin, setSavedPin] = useState("2389");
+  const [newPin, setNewPin] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      const get = async (k, d) => {
+        try { const r = await window.storage.get(k); return r && r.value ? JSON.parse(r.value) : d; }
+        catch (e) { return d; }
+      };
+      setRequests(await get("dawak-requests", []));
+      setExtra(await get("dawak-extra", []));
+      setApps(await get("dawak-apps", []));
+      setShifts(await get("dawak-shifts", []));
+      setProfile(await get("dawak-profile", null));
+      setPharmProfile(await get("dawak-pharm", null));
+      setSavedPin(await get("dawak-pin", "2389"));
+      setLoaded(true);
+    })();
+  }, []);
+
+  const save = async (k, v) => { try { await window.storage.set(k, JSON.stringify(v)); } catch (e) {} };
+  const saveRequests = async (n) => { const c = n.slice(0, 30); setRequests(c); save("dawak-requests", c); };
+
+  const ALL = [...PHARMACIES, ...extra];
+  const userLoc = customLoc || AREAS.find((a) => a.name === area);
+
+  const useGPS = () => {
+    if (!navigator.geolocation) { alert("جهازك لا يدعم تحديد الموقع"); return; }
+    setGpsBusy(true);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const c = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        setGpsBusy(false);
+        if (!inKhartoum(c)) { alert("موقعك الحالي خارج نطاق ولاية الخرطوم — استخدم اللصق أو اختيار الحي"); return; }
+        setCustomLoc({ ...c, label: "موقعي الحالي (GPS) 📍" });
+      },
+      () => { setGpsBusy(false); alert("تعذّر تحديد الموقع — تأكد من تفعيل GPS والسماح للتطبيق، أو استخدم الطرق الأخرى"); },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
+  };
+
+  const applyLocInput = () => {
+    const c = parseLocation(locInput);
+    if (!c) { alert("لم أفهم الموقع — الصق الإحداثيات (مثل 15.5533, 32.5384) أو رمز Plus Code (مثل HG3Q+89)"); return; }
+    if (!inKhartoum(c)) { alert("هذا الموقع خارج نطاق ولاية الخرطوم — تأكد مما نسخته"); return; }
+    setCustomLoc({ ...c, label: `موقع من الخريطة (${locInput.trim().slice(0, 20)})` });
+    setLocInput("");
+  };
+  const withCoords = ALL.filter((p) => p.lat);
+  const nearby = userLoc
+    ? withCoords.map((p) => ({ ...p, dist: distKm(userLoc, p) })).sort((a, b) => a.dist - b.dist)
+    : [];
+
+  const toggleSelect = (id) =>
+    setSelected((s) => (s.includes(id) ? s.filter((x) => x !== id) : s.length < 3 ? [...s, id] : s));
+
+  const handlePhoto = (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const max = 700, scale = Math.min(1, max / Math.max(img.width, img.height));
+        const cv = document.createElement("canvas");
+        cv.width = Math.round(img.width * scale); cv.height = Math.round(img.height * scale);
+        cv.getContext("2d").drawImage(img, 0, 0, cv.width, cv.height);
+        setPhoto(cv.toDataURL("image/jpeg", 0.65));
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+    e.target.value = "";
+  };
+
+  const recognizeDrug = async () => {
+    if (!photo) return;
+    setAiBusy(true);
+    try {
+      const b64 = photo.split(",")[1];
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-6", max_tokens: 1000,
+          messages: [{ role: "user", content: [
+            { type: "image", source: { type: "base64", media_type: "image/jpeg", data: b64 } },
+            { type: "text", text: "هذه صورة علبة دواء أو روشتة طبية. استخرج اسم أو أسماء الأدوية مع التركيز (mg) إن وُجد. أجب بأسماء الأدوية فقط مفصولة بفاصلة، بدون أي شرح. إذا لم تستطع القراءة أجب: غير_واضح" }
+          ]}]
+        })
+      });
+      const data = await res.json();
+      const text = (data.content || []).map((i) => i.text || "").join(" ").trim();
+      if (text && !text.includes("غير_واضح")) setDrug(text);
+      else alert("لم أستطع قراءة اسم الدواء — اكتبه يدوياً من فضلك");
+    } catch (err) { alert("تعذّر الاتصال بخدمة قراءة الصور — حاول مجدداً"); }
+    setAiBusy(false);
+  };
+
+  const sendRequest = async () => {
+    const now = new Date();
+    const newReqs = selected.map((pid) => ({
+      id: `${Date.now()}-${pid}`, pharmacyId: pid,
+      drug: drug.trim(), note: note.trim(), address: address.trim(),
+      photo, isRx, clientName: profile?.name || "", clientPhone: profile?.phone || "",
+      area: area || (customLoc ? customLoc.label : ""),
+      status: "pending", date: today(),
+      time: now.toLocaleTimeString("ar-SD", { hour: "2-digit", minute: "2-digit" }),
+    }));
+    await saveRequests([...newReqs, ...requests]);
+    setSent(true); setSelected([]); setPhoto(null); setIsRx(false);
+  };
+
+  const updateStatus = async (rid, status) =>
+    saveRequests(requests.map((r) => (r.id === rid ? { ...r, status } : r)));
+
+  const waLink = (p) => {
+    const msg = encodeURIComponent(
+      `السلام عليكم، أبحث عن دواء: ${drug || "..."}${note ? `\nملاحظة: ${note}` : ""}\nعنواني: ${address || area || "..."}\n(عبر تطبيق دواك برو)`
+    );
+    return `https://wa.me/${p.wa}?text=${msg}`;
+  };
+
+  const canSend = drug.trim() && address.trim() && selected.length > 0;
+  const myId = pharmProfile?.pharmacyId;
+  const incoming = requests.filter((r) => r.pharmacyId === myId);
+  const todayReqs = incoming.filter((r) => r.date === today());
+  const stats = {
+    total: todayReqs.length,
+    confirmed: todayReqs.filter((r) => r.status === "available" || r.status === "delivering").length,
+    delivered: todayReqs.filter((r) => r.status === "delivering").length,
+    missed: todayReqs.filter((r) => r.status === "unavailable").length,
+  };
+
+  const endShift = async () => {
+    const rec = { pharmacyId: myId, date: today(), ...stats,
+      time: new Date().toLocaleTimeString("ar-SD", { hour: "2-digit", minute: "2-digit" }) };
+    const next = [rec, ...shifts].slice(0, 30);
+    setShifts(next); save("dawak-shifts", next);
+  };
+
+  const submitJoin = async () => {
+    const app = { id: `a${Date.now()}`, name: joinName.trim(), phone: joinPhone.trim(),
+      area: joinArea.trim(), link: joinLink.trim(), date: today(), status: "pending" };
+    const next = [app, ...apps];
+    setApps(next); save("dawak-apps", next);
+    setJoinSent(true); setJoinName(""); setJoinPhone(""); setJoinArea(""); setJoinLink("");
+  };
+
+  const decideApp = async (aid, ok) => {
+    const app = apps.find((a) => a.id === aid);
+    const next = apps.map((a) => (a.id === aid ? { ...a, status: ok ? "approved" : "rejected" } : a));
+    setApps(next); save("dawak-apps", next);
+    if (ok && app) {
+      const p = { id: `x${Date.now()}`, name: `صيدلية ${app.name}`, phone: app.phone,
+        wa: app.phone.length === 10 && app.phone.startsWith("0") ? "249" + app.phone.slice(1) : "",
+        lat: null, lng: null, area: app.area, map: app.link };
+      const ne = [...extra, p];
+      setExtra(ne); save("dawak-extra", ne);
+    }
+  };
+
+  const shown = showAll ? nearby : nearby.slice(0, 8);
+  const allToday = requests.filter((r) => r.date === today());
+  const activity = {};
+  requests.forEach((r) => { activity[r.pharmacyId] = (activity[r.pharmacyId] || 0) + 1; });
+  const topActive = Object.entries(activity).sort((a, b) => b[1] - a[1]).slice(0, 5);
+
+  return (
+    <div dir="rtl" className="app">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap');
+        * { box-sizing: border-box; margin: 0; }
+        .app { min-height: 100vh; background: #F2F6F4; color: #14231E; font-family: 'IBM Plex Sans Arabic', sans-serif; padding-bottom: 40px; }
+        .hdr { background: linear-gradient(160deg, #0B6650, #0E7A5F); color: #fff; padding: 20px 18px 16px; position: relative; overflow: hidden; }
+        .hdr::after { content: ''; position: absolute; inset: 0; opacity: .12; pointer-events: none;
+          background: linear-gradient(115deg, transparent 47%, #fff 47%, #fff 53%, transparent 53%), linear-gradient(65deg, transparent 47%, #fff 47%, #fff 53%, transparent 53%); }
+        .logo { display:flex; align-items:center; gap:10px; }
+        .cross { width: 34px; height: 34px; background:#fff; border-radius: 9px; position: relative; flex-shrink:0; }
+        .cross::before, .cross::after { content:''; position:absolute; background:#0E7A5F; border-radius:2px; top:50%; left:50%; transform:translate(-50%,-50%); }
+        .cross::before { width:18px; height:6px; } .cross::after { width:6px; height:18px; }
+        .logo h1 { font-family:'Readex Pro'; font-size:24px; font-weight:700; }
+        .logo h1 span { font-size:13px; background:#fff; color:#0E7A5F; border-radius:7px; padding:2px 8px; margin-right:7px; vertical-align:middle; }
+        .logo p { font-size:12px; opacity:.85; margin-top:2px; }
+        .adm-link { position:absolute; top:14px; left:14px; background:rgba(255,255,255,.15); border:0; color:#fff; border-radius:9px; padding:6px 11px; font-family:inherit; font-size:12px; font-weight:700; cursor:pointer; z-index:3; }
+        .tabs { display:flex; gap:6px; background:#fff; margin:-14px 16px 0; border-radius:14px; padding:5px; box-shadow:0 4px 16px rgba(11,102,80,.14); position:relative; z-index:2; }
+        .tabs button { flex:1; border:0; background:transparent; padding:11px 6px; border-radius:10px; font-family:inherit; font-size:14px; font-weight:700; color:#5C6E67; cursor:pointer; }
+        .tabs button.on { background:#0E7A5F; color:#fff; }
+        .wrap { padding: 18px 16px 0; max-width: 560px; margin: 0 auto; }
+        .card { background:#fff; border-radius:16px; padding:16px; margin-bottom:12px; box-shadow: 0 1px 4px rgba(20,35,30,.06); }
+        label { display:block; font-size:13px; font-weight:700; color:#3C4F48; margin-bottom:6px; }
+        input, select, textarea { width:100%; padding:12px 13px; border:1.5px solid #D6E2DD; border-radius:11px; font-family:inherit; font-size:15px; background:#FBFDFC; color:#14231E; margin-bottom:12px; }
+        input:focus, select:focus, textarea:focus { outline:none; border-color:#0E7A5F; }
+        .drugrow { display:flex; gap:8px; }
+        .drugrow input { flex:1; }
+        .camb { width:52px; height:49px; border:1.5px dashed #0E7A5F; border-radius:11px; background:#F7FBF9; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+        .ph { display:flex; align-items:center; gap:10px; padding:13px 14px; border:1.5px solid #E2EBE7; border-radius:13px; margin-bottom:9px; background:#fff; cursor:pointer; }
+        .ph.sel { border-color:#0E7A5F; background:#F0F8F5; box-shadow:0 0 0 1px #0E7A5F; }
+        .ph .info { flex:1; min-width:0; }
+        .ph .nm { font-weight:700; font-size:15px; }
+        .ph .ar { font-size:12.5px; color:#67796F; margin-top:2px; }
+        .dist { font-family:'Readex Pro'; font-weight:700; font-size:13.5px; color:#0E7A5F; background:#E3F3EC; padding:5px 9px; border-radius:9px; white-space:nowrap; }
+        .ico { display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:10px; text-decoration:none; flex-shrink:0; font-size:17px; }
+        .wa { background:#25D366; } .mp { background:#E6F0FB; }
+        .btn { width:100%; padding:14px; border:0; border-radius:13px; background:#0E7A5F; color:#fff; font-family:'Readex Pro'; font-size:16px; font-weight:700; cursor:pointer; margin-top:4px; }
+        .btn:disabled { background:#B9CCC5; cursor:not-allowed; }
+        .btn.blue { background:#1D5FA8; }
+        .more { width:100%; padding:11px; border:1.5px dashed #0E7A5F; border-radius:11px; background:transparent; color:#0E7A5F; font-family:inherit; font-weight:700; font-size:13.5px; cursor:pointer; margin-top:2px; }
+        .hint { font-size:12.5px; color:#67796F; text-align:center; margin:8px 0 4px; }
+        .badge { display:inline-block; font-size:12px; font-weight:700; padding:4px 11px; border-radius:8px; }
+        .req { border-right:4px solid #0E7A5F; }
+        .req .top { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:8px; }
+        .req .drug { font-family:'Readex Pro'; font-weight:700; font-size:16px; }
+        .req .meta { font-size:13px; color:#4B5D55; line-height:1.7; }
+        .req .time { font-size:11.5px; color:#8FA098; }
+        .acts { display:flex; gap:8px; margin-top:12px; }
+        .acts button { flex:1; padding:10px; border-radius:10px; border:0; font-family:inherit; font-weight:700; font-size:13.5px; cursor:pointer; }
+        .ok { background:#0E7A5F; color:#fff; } .no { background:#FBE9E9; color:#A33A3A; } .go { background:#1D5FA8; color:#fff; }
+        .empty { text-align:center; padding:30px 16px; color:#7B8C84; font-size:14px; }
+        .empty .big { font-size:38px; margin-bottom:10px; }
+        .notice { background:#E3F3EC; border:1px solid #9CCDB9; border-radius:12px; padding:11px 13px; font-size:12.5px; color:#0B4A3A; margin-bottom:14px; line-height:1.7; }
+        h2 { font-family:'Readex Pro'; font-size:17px; margin:6px 0 12px; color:#0B4A3A; }
+        .toast { background:#E3F3EC; border:1.5px solid #0E7A5F; color:#0B4A3A; border-radius:13px; padding:14px; text-align:center; font-weight:700; margin-bottom:12px; font-size:14.5px; }
+        .upl { display:flex; align-items:center; justify-content:center; gap:8px; padding:13px; border:1.5px dashed #0E7A5F; border-radius:11px; color:#0E7A5F; font-weight:700; font-size:14px; cursor:pointer; margin-bottom:12px; background:#F7FBF9; }
+        .photo-row { display:flex; gap:12px; align-items:flex-start; margin-bottom:12px; }
+        .thumb { width:76px; height:76px; object-fit:cover; border-radius:11px; border:1.5px solid #D6E2DD; cursor:pointer; }
+        .thumb.big { width:110px; height:110px; margin-top:8px; display:block; }
+        .ai { width:100%; padding:10px; border:0; border-radius:10px; background:#5B3FA8; color:#fff; font-family:inherit; font-weight:700; font-size:13px; cursor:pointer; margin-bottom:7px; }
+        .ai:disabled { opacity:.6; }
+        .rm { width:100%; padding:8px; border:1.5px solid #E2B4B4; border-radius:10px; background:#fff; color:#A33A3A; font-family:inherit; font-weight:700; font-size:12.5px; cursor:pointer; }
+        .chk { display:flex; align-items:center; gap:9px; font-size:13.5px; font-weight:700; color:#3C4F48; margin-bottom:4px; cursor:pointer; }
+        .chk input { width:auto; margin:0; accent-color:#0E7A5F; }
+        .badge.rx { background:#EFE9FB; color:#5B3FA8; margin-top:6px; }
+        .modal { position:fixed; inset:0; background:rgba(10,20,16,.85); display:flex; align-items:center; justify-content:center; z-index:50; padding:20px; }
+        .modal img { max-width:100%; max-height:90vh; border-radius:14px; }
+        .gps { width:100%; padding:13px; border:0; border-radius:11px; background:#1D5FA8; color:#fff; font-family:inherit; font-weight:700; font-size:14.5px; cursor:pointer; margin-bottom:9px; }
+        .gps:disabled { opacity:.6; }
+        .locrow { display:flex; gap:8px; }
+        .locrow input { flex:1; }
+        .locgo { padding:0 18px; border:0; border-radius:11px; background:#0E7A5F; color:#fff; font-family:inherit; font-weight:700; font-size:14px; cursor:pointer; height:49px; flex-shrink:0; }
+        .locgo:disabled { background:#B9CCC5; }
+        .locchip { display:flex; justify-content:space-between; align-items:center; background:#E3F3EC; border:1.5px solid #0E7A5F; border-radius:11px; padding:11px 13px; margin-bottom:12px; font-weight:700; font-size:13.5px; color:#0B4A3A; }
+        .locchip button { border:0; background:#0E7A5F; color:#fff; border-radius:8px; padding:6px 12px; font-family:inherit; font-weight:700; font-size:12px; cursor:pointer; }
+        .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:12px; }
+        .stat { background:#F0F8F5; border-radius:12px; padding:11px 6px; text-align:center; }
+        .stat .n { font-family:'Readex Pro'; font-size:22px; font-weight:700; color:#0E7A5F; }
+        .stat .l { font-size:10.5px; color:#4B5D55; margin-top:3px; font-weight:700; }
+        .shift { display:flex; justify-content:space-between; align-items:center; padding:9px 4px; border-bottom:1px solid #EEF3F1; font-size:13px; }
+        .link-a { color:#1D5FA8; font-weight:700; font-size:13px; background:none; border:none; cursor:pointer; font-family:inherit; text-decoration:underline; }
+        .sec-item { display:flex; gap:10px; padding:9px 0; border-bottom:1px solid #EEF3F1; font-size:13px; line-height:1.7; }
+        .sec-item .s { flex-shrink:0; }
+      `}</style>
+
+      <div className="hdr">
+        <button className="adm-link" onClick={() => setMode("admin")}>⚙️ الإدارة</button>
+        <div className="logo">
+          <div className="cross" />
+          <div>
+            <h1>دواك <span>PRO</span></h1>
+            <p>أقرب صيدلية فيها دواك — ولاية الخرطوم</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="tabs">
+        <button className={mode === "client" ? "on" : ""} onClick={() => setMode("client")}>🔍 أبحث عن دواء</button>
+        <button className={mode === "pharm" ? "on" : ""} onClick={() => { setMode("pharm"); setSent(false); }}>💊 واجهة الصيدلي</button>
+      </div>
+
+      <div className="wrap">
+
+        {/* ══════════ العميل ══════════ */}
+        {mode === "client" && loaded && !profile && (
+          <div className="card">
+            <h2>مرحباً بك في دواك برو 👋</h2>
+            <div className="hint" style={{textAlign:"right",margin:"0 0 12px"}}>سجّل مرة واحدة فقط ليعرف الصيدلي من يتواصل معه ويوصل طلبك بثقة.</div>
+            <label>اسمك</label>
+            <input value={regName} onChange={(e) => setRegName(e.target.value)} placeholder="الاسم الكامل" />
+            <label>رقم هاتفك</label>
+            <input value={regPhone} onChange={(e) => setRegPhone(e.target.value)} placeholder="09XXXXXXXX" inputMode="tel" />
+            <button className="btn" disabled={!regName.trim() || regPhone.trim().length < 9}
+              onClick={() => { const p = { name: regName.trim(), phone: regPhone.trim() }; setProfile(p); save("dawak-profile", p); }}>
+              تسجيل الدخول
+            </button>
+          </div>
+        )}
+
+        {mode === "client" && profile && (
+          <>
+            {sent && <div className="toast">✓ تم إرسال طلبك يا {profile.name.split(" ")[0]}! تابع حالته أدناه.</div>}
+            <div className="card">
+              <h2>ما الدواء الذي تبحث عنه؟</h2>
+              <label>موقعك</label>
+              {customLoc ? (
+                <div className="locchip">
+                  <span>✓ {customLoc.label}</span>
+                  <button onClick={() => setCustomLoc(null)}>تغيير</button>
+                </div>
+              ) : (
+                <>
+                  <button className="gps" onClick={useGPS} disabled={gpsBusy}>
+                    {gpsBusy ? "⏳ جارٍ تحديد موقعك..." : "📍 حدد موقعي تلقائياً (GPS)"}
+                  </button>
+                  <div className="locrow">
+                    <input placeholder="أو الصق موقعك من خرائط قوقل" value={locInput}
+                      onChange={(e) => setLocInput(e.target.value)} style={{ marginBottom: 0 }} />
+                    <button className="locgo" onClick={applyLocInput} disabled={!locInput.trim()}>تحديد</button>
+                  </div>
+                  <div className="hint" style={{ textAlign: "right", margin: "6px 0 10px" }}>
+                    من خرائط قوقل: اضغط مطولاً على موقعك ← انسخ الإحداثيات أو رمز الموقع (مثل HG3Q+89) والصقه هنا
+                  </div>
+                  <label>أو اختر الحي يدوياً</label>
+                  <select value={area} onChange={(e) => { setArea(e.target.value); setSent(false); }}>
+                    <option value="">— اختر الحي —</option>
+                    {AREAS.map((a) => <option key={a.name} value={a.name}>{a.name}</option>)}
+                  </select>
+                </>
+              )}
+              <label>ابحث بالاسم أو بالصورة 📷</label>
+              <div className="drugrow">
+                <input placeholder="اسم الدواء: Amoxicillin 500mg" value={drug} onChange={(e) => setDrug(e.target.value)} />
+                <label className="camb">📷<input type="file" accept="image/*" onChange={handlePhoto} style={{ display: "none" }} /></label>
+              </div>
+              {photo && (
+                <div className="photo-row">
+                  <img className="thumb" src={photo} alt="" onClick={() => setViewImg(photo)} />
+                  <div style={{ flex: 1 }}>
+                    <button className="ai" onClick={recognizeDrug} disabled={aiBusy}>
+                      {aiBusy ? "⏳ جارٍ قراءة الصورة..." : "✨ تعرّف على اسم الدواء من الصورة"}
+                    </button>
+                    <button className="rm" onClick={() => setPhoto(null)}>إزالة الصورة</button>
+                  </div>
+                </div>
+              )}
+              <label>ملاحظة (اختياري)</label>
+              <input placeholder="مثال: شراب للأطفال" value={note} onChange={(e) => setNote(e.target.value)} />
+              <label>عنوانك للتوصيل</label>
+              <textarea rows={2} placeholder="الحي، الشارع، أقرب معلم" value={address} onChange={(e) => setAddress(e.target.value)} />
+              <label className="chk">
+                <input type="checkbox" checked={isRx} onChange={(e) => setIsRx(e.target.checked)} />
+                دواء يُصرف بروشتة / تأمين (الروشتة المختومة مرفقة بالصورة)
+              </label>
+            </div>
+
+            {userLoc && (
+              <div className="card">
+                <h2>أقرب الصيدليات إليك</h2>
+                <div className="hint">اختر حتى 3 صيدليات • 🗺️ الموقع • 💬 واتساب</div>
+                {shown.map((p) => (
+                  <div key={p.id} className={`ph ${selected.includes(p.id) ? "sel" : ""}`} onClick={() => toggleSelect(p.id)}>
+                    <div className="info">
+                      <div className="nm">{p.name}</div>
+                      {p.area && <div className="ar">{p.area}</div>}
+                    </div>
+                    <span className="dist">{p.dist < 1 ? `${Math.round(p.dist * 1000)} م` : `${p.dist.toFixed(1)} كم`}</span>
+                    {p.map && <a className="ico mp" href={p.map} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>🗺️</a>}
+                    {p.wa && <a className="ico wa" href={waLink(p)} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>💬</a>}
+                  </div>
+                ))}
+                {!showAll && nearby.length > 8 && <button className="more" onClick={() => setShowAll(true)}>عرض كل الصيدليات ({nearby.length})</button>}
+                <button className="btn" disabled={!canSend} onClick={sendRequest}>إرسال الطلب {selected.length > 0 ? `(${selected.length})` : ""}</button>
+                {!canSend && <div className="hint">أكمل اسم الدواء والعنوان واختر صيدلية واحدة على الأقل</div>}
+              </div>
+            )}
+
+            {requests.length > 0 && (
+              <div className="card">
+                <h2>طلباتي</h2>
+                {requests.map((r) => {
+                  const p = ALL.find((x) => x.id === r.pharmacyId);
+                  const s = STATUS[r.status];
+                  return (
+                    <div key={r.id} className="card req" style={{ marginBottom: 9 }}>
+                      <div className="top">
+                        <div>
+                          <div className="drug">{r.drug} {r.photo ? "📎" : ""}</div>
+                          <div className="meta">{p?.name}{r.isRx ? " • روشتة" : ""}</div>
+                        </div>
+                        <span className="badge" style={{ color: s.color, background: s.bg }}>{s.label}</span>
+                      </div>
+                      <div className="time">أُرسل الساعة {r.time}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </>
+        )}
+
+        {/* ══════════ الصيدلي ══════════ */}
+        {mode === "pharm" && loaded && !pharmProfile && !joinMode && (
+          <div className="card">
+            <h2>تسجيل الصيدلية 💊</h2>
+            <label>اختر صيدليتك من القائمة</label>
+            <select value={claimId} onChange={(e) => setClaimId(e.target.value)}>
+              <option value="">— ابحث عن صيدليتك —</option>
+              {ALL.map((p) => <option key={p.id} value={p.id}>{p.name}{p.area ? ` — ${p.area}` : ""}</option>)}
+            </select>
+            <label>اسم المسؤول</label>
+            <input value={regName} onChange={(e) => setRegName(e.target.value)} placeholder="اسم الصيدلي / المالك" />
+            <label>رقم الهاتف (للتحقق)</label>
+            <input value={regPhone} onChange={(e) => setRegPhone(e.target.value)} placeholder="09XXXXXXXX" inputMode="tel" />
+            <button className="btn" disabled={!claimId || !regName.trim() || regPhone.trim().length < 9}
+              onClick={() => { const pp = { pharmacyId: claimId, name: regName.trim(), phone: regPhone.trim() }; setPharmProfile(pp); save("dawak-pharm", pp); }}>
+              هذه صيدليتي — تسجيل
+            </button>
+            <div className="hint">صيدليتك غير موجودة في القائمة؟ <button className="link-a" onClick={() => setJoinMode(true)}>قدّم طلب انضمام</button></div>
+          </div>
+        )}
+
+        {mode === "pharm" && joinMode && !pharmProfile && (
+          <div className="card">
+            <h2>طلب انضمام صيدلية جديدة</h2>
+            {joinSent && <div className="toast">✓ تم إرسال طلبك! ستتم مراجعته من الإدارة والتواصل معك.</div>}
+            <label>اسم الصيدلية</label>
+            <input value={joinName} onChange={(e) => setJoinName(e.target.value)} placeholder="بدون كلمة صيدلية" />
+            <label>رقم الهاتف</label>
+            <input value={joinPhone} onChange={(e) => setJoinPhone(e.target.value)} placeholder="09XXXXXXXX" inputMode="tel" />
+            <label>الحي / المنطقة</label>
+            <input value={joinArea} onChange={(e) => setJoinArea(e.target.value)} placeholder="مثال: بحري - الحلفايا" />
+            <label>رابط الموقع من خرائط قوقل (اختياري)</label>
+            <input value={joinLink} onChange={(e) => setJoinLink(e.target.value)} placeholder="https://maps.app.goo.gl/..." />
+            <button className="btn" disabled={!joinName.trim() || joinPhone.trim().length < 9} onClick={submitJoin}>إرسال طلب الانضمام</button>
+            <div className="hint"><button className="link-a" onClick={() => { setJoinMode(false); setJoinSent(false); }}>→ رجوع للتسجيل</button></div>
+          </div>
+        )}
+
+        {mode === "pharm" && pharmProfile && (
+          <>
+            <div className="card">
+              <h2>📊 لوحة {ALL.find((p) => p.id === myId)?.name}</h2>
+              <div className="stats">
+                <div className="stat"><div className="n">{stats.total}</div><div className="l">طلبات اليوم</div></div>
+                <div className="stat"><div className="n">{stats.confirmed}</div><div className="l">مؤكدة</div></div>
+                <div className="stat"><div className="n">{stats.delivered}</div><div className="l">مبيعات ✓</div></div>
+                <div className="stat"><div className="n">{stats.total ? Math.round((stats.confirmed / stats.total) * 100) : 0}%</div><div className="l">نسبة التوفر</div></div>
+              </div>
+              <button className="btn blue" onClick={endShift}>🕐 إنهاء الشفت وحفظ تقرير اليوم</button>
+              {shifts.filter((s) => s.pharmacyId === myId).length > 0 && (
+                <div style={{ marginTop: 12 }}>
+                  <label>تقارير الشفتات السابقة</label>
+                  {shifts.filter((s) => s.pharmacyId === myId).slice(0, 7).map((s, i) => (
+                    <div key={i} className="shift">
+                      <span>{s.date} — {s.time}</span>
+                      <span><b>{s.delivered}</b> مبيعات من <b>{s.total}</b> طلبات</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div className="hint"><button className="link-a" onClick={() => { setPharmProfile(null); save("dawak-pharm", null); }}>تسجيل خروج</button></div>
+            </div>
+
+            {incoming.length === 0 ? (
+              <div className="card empty"><div className="big">📭</div>لا توجد طلبات واردة بعد.</div>
+            ) : (
+              incoming.map((r) => {
+                const s = STATUS[r.status];
+                return (
+                  <div key={r.id} className="card req">
+                    <div className="top">
+                      <div>
+                        <div className="drug">💊 {r.drug}</div>
+                        {r.note && <div className="meta">ملاحظة: {r.note}</div>}
+                      </div>
+                      <span className="badge" style={{ color: s.color, background: s.bg }}>{s.label}</span>
+                    </div>
+                    <div className="meta">👤 {r.clientName || "عميل"} {r.clientPhone ? `— ${r.clientPhone}` : ""}</div>
+                    <div className="meta">📍 العنوان: {r.address} ({r.area})</div>
+                    {r.isRx && <span className="badge rx">🩺 روشتة / تأمين مرفقة</span>}
+                    {r.photo && <img className="thumb big" src={r.photo} alt="مرفق" onClick={() => setViewImg(r.photo)} />}
+                    <div className="time">وصل الساعة {r.time}</div>
+                    {r.status === "pending" && (
+                      <div className="acts">
+                        <button className="ok" onClick={() => updateStatus(r.id, "available")}>✓ متوفر عندنا</button>
+                        <button className="no" onClick={() => updateStatus(r.id, "unavailable")}>غير متوفر</button>
+                      </div>
+                    )}
+                    {r.status === "available" && (
+                      <div className="acts"><button className="go" onClick={() => updateStatus(r.id, "delivering")}>🛵 تم إرسال الطلب للتوصيل</button></div>
+                    )}
+                  </div>
+                );
+              })
+            )}
+          </>
+        )}
+
+        {/* ══════════ الإدارة ══════════ */}
+        {mode === "admin" && !adminOk && (
+          <div className="card">
+            <h2>🔐 دخول الإدارة</h2>
+            <label>الرقم السري</label>
+            <input type="password" value={pin} onChange={(e) => setPin(e.target.value)} placeholder="••••" inputMode="numeric" />
+            <button className="btn" onClick={() => { if (pin === savedPin) { setAdminOk(true); setPin(""); } else alert("رقم سري خاطئ"); }}>دخول</button>
+          </div>
+        )}
+
+        {mode === "admin" && adminOk && (
+          <>
+            <div className="card">
+              <h2>📈 نشاط التطبيق</h2>
+              <div className="stats">
+                <div className="stat"><div className="n">{allToday.length}</div><div className="l">طلبات اليوم</div></div>
+                <div className="stat"><div className="n">{requests.length}</div><div className="l">إجمالي الطلبات</div></div>
+                <div className="stat"><div className="n">{ALL.length}</div><div className="l">الصيدليات</div></div>
+                <div className="stat"><div className="n">{apps.filter((a) => a.status === "pending").length}</div><div className="l">طلبات انضمام</div></div>
+              </div>
+              {topActive.length > 0 && (
+                <div>
+                  <label>أنشط الصيدليات (بعدد الطلبات)</label>
+                  {topActive.map(([pid, n]) => (
+                    <div key={pid} className="shift"><span>{ALL.find((p) => p.id === pid)?.name || pid}</span><b>{n} طلب</b></div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="card">
+              <h2>🏪 طلبات انضمام الصيدليات</h2>
+              {apps.length === 0 ? <div className="empty">لا توجد طلبات انضمام بعد.</div> :
+                apps.map((a) => (
+                  <div key={a.id} className="card req" style={{ marginBottom: 9 }}>
+                    <div className="top">
+                      <div>
+                        <div className="drug">صيدلية {a.name}</div>
+                        <div className="meta">📞 {a.phone} — 📍 {a.area || "غير محدد"}</div>
+                      </div>
+                      <span className="badge" style={a.status === "approved" ? { color: "#0E7A5F", background: "#E3F3EC" } : a.status === "rejected" ? { color: "#A33A3A", background: "#FBE9E9" } : { color: "#B96A00", background: "#FDF1DE" }}>
+                        {a.status === "approved" ? "مقبولة ✓" : a.status === "rejected" ? "مرفوضة" : "قيد المراجعة"}
+                      </span>
+                    </div>
+                    {a.status === "pending" && (
+                      <div className="acts">
+                        <button className="ok" onClick={() => decideApp(a.id, true)}>✓ قبول وإضافة للتطبيق</button>
+                        <button className="no" onClick={() => decideApp(a.id, false)}>رفض</button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+            </div>
+
+            <div className="card">
+              <h2>🛡️ الأمن السيبراني — حماية بياناتك</h2>
+              <div className="sec-item"><span className="s">✅</span><span><b>إخفاء الأرقام:</b> أرقام الصيدليات لا تظهر أبداً في واجهة العميل — التواصل عبر أزرار فقط، فلا يمكن نسخ القائمة.</span></div>
+              <div className="sec-item"><span className="s">✅</span><span><b>تسجيل إجباري:</b> لا بحث ولا تواصل بدون تسجيل بالاسم والرقم — أي محاولة جمع ممنهج تكون مُعرَّفة الهوية.</span></div>
+              <div className="sec-item"><span className="s">✅</span><span><b>لوحة إدارة بكلمة سر:</b> البيانات الكاملة لا يراها غيرك.</span></div>
+              <div className="sec-item"><span className="s">🔜</span><span><b>عند الربط بالخادم (Firebase):</b> حد أقصى للطلبات لكل مستخدم (Rate Limiting)، إخفاء قاعدة البيانات خلف قواعد أمنية، وكشف أنماط الجمع الآلي وحظرها تلقائياً.</span></div>
+              <label style={{ marginTop: 12 }}>تغيير الرقم السري للإدارة</label>
+              <input type="password" value={newPin} onChange={(e) => setNewPin(e.target.value)} placeholder="رقم سري جديد" />
+              <button className="btn" disabled={newPin.length < 4} onClick={() => { setSavedPin(newPin); save("dawak-pin", newPin); setNewPin(""); alert("تم تغيير الرقم السري ✓"); }}>حفظ الرقم الجديد</button>
+              <div className="hint"><button className="link-a" onClick={() => { setAdminOk(false); setMode("client"); }}>خروج من الإدارة</button></div>
+            </div>
+          </>
+        )}
+      </div>
+
+      {viewImg && (
+        <div className="modal" onClick={() => setViewImg(null)}>
+          <img src={viewImg} alt="" />
+        </div>
+      )}
+    </div>
+  );
+}
