@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>مراكو برو — Mraco Pro | أقرب صيدلية فيها دواك</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; }
+body { min-height: 100vh; background: #F2F6F4; color: #14231E; font-family: 'IBM Plex Sans Arabic', sans-serif; padding-bottom: 40px; }
+.hdr { background: linear-gradient(160deg, #0B6650, #0E7A5F); color: #fff; padding: 20px 18px 16px; position: relative; overflow: hidden; }
+.hdr::after { content: ''; position: absolute; inset: 0; opacity: .12; pointer-events: none;
+  background: linear-gradient(115deg, transparent 47%, #fff 47%, #fff 53%, transparent 53%), linear-gradient(65deg, transparent 47%, #fff 47%, #fff 53%, transparent 53%); }
+.logo { display:flex; align-items:center; gap:10px; }
+.cross { width: 34px; height: 34px; background:#fff; border-radius: 9px; position: relative; flex-shrink:0; }
+.cross::before, .cross::after { content:''; position:absolute; background:#0E7A5F; border-radius:2px; top:50%; left:50%; transform:translate(-50%,-50%); }
+.cross::before { width:18px; height:6px; } .cross::after { width:6px; height:18px; }
+.logo h1 { font-family:'Readex Pro'; font-size:24px; font-weight:700; }
+.logo h1 span { font-size:13px; background:#fff; color:#0E7A5F; border-radius:7px; padding:2px 8px; margin-right:7px; vertical-align:middle; }
+.logo p { font-size:12px; opacity:.85; margin-top:2px; }
+.adm-link { position:absolute; top:14px; left:14px; background:rgba(255,255,255,.15); border:0; color:#fff; border-radius:9px; padding:6px 11px; font-family:inherit; font-size:12px; font-weight:700; cursor:pointer; z-index:3; }
+.tabs { display:flex; gap:6px; background:#fff; margin:-14px 16px 0; border-radius:14px; padding:5px; box-shadow:0 4px 16px rgba(11,102,80,.14); position:relative; z-index:2; }
+.tabs button { flex:1; border:0; background:transparent; padding:11px 6px; border-radius:10px; font-family:inherit; font-size:14px; font-weight:700; color:#5C6E67; cursor:pointer; }
+.tabs button.on { background:#0E7A5F; color:#fff; }
+.wrap { padding: 18px 16px 0; max-width: 560px; margin: 0 auto; }
+.card { background:#fff; border-radius:16px; padding:16px; margin-bottom:12px; box-shadow: 0 1px 4px rgba(20,35,30,.06); }
+label { display:block; font-size:13px; font-weight:700; color:#3C4F48; margin-bottom:6px; }
+input, select, textarea { width:100%; padding:12px 13px; border:1.5px solid #D6E2DD; border-radius:11px; font-family:inherit; font-size:15px; background:#FBFDFC; color:#14231E; margin-bottom:12px; }
+input:focus, select:focus, textarea:focus { outline:none; border-color:#0E7A5F; }
+.drugrow { display:flex; gap:8px; }
+.drugrow input { flex:1; }
+.camb { width:52px; height:49px; border:1.5px dashed #0E7A5F; border-radius:11px; background:#F7FBF9; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.ph { display:flex; align-items:center; gap:10px; padding:13px 14px; border:1.5px solid #E2EBE7; border-radius:13px; margin-bottom:9px; background:#fff; cursor:pointer; }
+.ph.sel { border-color:#0E7A5F; background:#F0F8F5; box-shadow:0 0 0 1px #0E7A5F; }
+.ph .info { flex:1; min-width:0; }
+.ph .nm { font-weight:700; font-size:15px; }
+.ph .ar { font-size:12.5px; color:#67796F; margin-top:2px; }
+.dist { font-family:'Readex Pro'; font-weight:700; font-size:13.5px; color:#0E7A5F; background:#E3F3EC; padding:5px 9px; border-radius:9px; white-space:nowrap; }
+.ico { display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:10px; text-decoration:none; flex-shrink:0; font-size:17px; }
+.wa { background:#25D366; } .mp { background:#E6F0FB; }
+.btn { width:100%; padding:14px; border:0; border-radius:13px; background:#0E7A5F; color:#fff; font-family:'Readex Pro'; font-size:16px; font-weight:700; cursor:pointer; margin-top:4px; }
+.btn:disabled { background:#B9CCC5; cursor:not-allowed; }
+.btn.blue { background:#1D5FA8; }
+.more { width:100%; padding:11px; border:1.5px dashed #0E7A5F; border-radius:11px; background:transparent; color:#0E7A5F; font-family:inherit; font-weight:700; font-size:13.5px; cursor:pointer; margin-top:2px; }
+.hint { font-size:12.5px; color:#67796F; text-align:center; margin:8px 0 4px; }
+.badge { display:inline-block; font-size:12px; font-weight:700; padding:4px 11px; border-radius:8px; }
+.req { border-right:4px solid #0E7A5F; }
+.req .top { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:8px; }
+.req .drug { font-family:'Readex Pro'; font-weight:700; font-size:16px; }
+.req .meta { font-size:13px; color:#4B5D55; line-height:1.7; }
+.req .time { font-size:11.5px; color:#8FA098; }
+.acts { display:flex; gap:8px; margin-top:12px; }
+.acts button { flex:1; padding:10px; border-radius:10px; border:0; font-family:inherit; font-weight:700; font-size:13.5px; cursor:pointer; }
+.ok { background:#0E7A5F; color:#fff; } .no { background:#FBE9E9; color:#A33A3A; } .go { background:#1D5FA8; color:#fff; }
+.empty { text-align:center; padding:30px 16px; color:#7B8C84; font-size:14px; }
+.empty .big { font-size:38px; margin-bottom:10px; }
+h2 { font-family:'Readex Pro'; font-size:17px; margin:6px 0 12px; color:#0B4A3A; }
+.toast { background:#E3F3EC; border:1.5px solid #0E7A5F; color:#0B4A3A; border-radius:13px; padding:14px; text-align:center; font-weight:700; margin-bottom:12px; font-size:14.5px; }
+.photo-row { display:flex; gap:12px; align-items:flex-start; margin-bottom:12px; }
+.thumb { width:76px; height:76px; object-fit:cover; border-radius:11px; border:1.5px solid #D6E2DD; cursor:pointer; }
+.thumb.big { width:110px; height:110px; margin-top:8px; display:block; }
+.rm { width:100%; padding:8px; border:1.5px solid #E2B4B4; border-radius:10px; background:#fff; color:#A33A3A; font-family:inherit; font-weight:700; font-size:12.5px; cursor:pointer; }
+.chk { display:flex; align-items:center; gap:9px; font-size:13.5px; font-weight:700; color:#3C4F48; margin-bottom:4px; cursor:pointer; }
+.chk input { width:auto; margin:0; accent-color:#0E7A5F; }
+.badge.rx { background:#EFE9FB; color:#5B3FA8; margin-top:6px; }
+.modal { position:fixed; inset:0; background:rgba(10,20,16,.85); display:flex; align-items:center; justify-content:center; z-index:50; padding:20px; }
+.modal img { max-width:100%; max-height:90vh; border-radius:14px; }
+.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:12px; }
+.stat { background:#F0F8F5; border-radius:12px; padding:11px 6px; text-align:center; }
+.stat .n { font-family:'Readex Pro'; font-size:22px; font-weight:700; color:#0E7A5F; }
+.stat .l { font-size:10.5px; color:#4B5D55; margin-top:3px; font-weight:700; }
+.shift { display:flex; justify-content:space-between; align-items:center; padding:9px 4px; border-bottom:1px solid #EEF3F1; font-size:13px; }
+.link-a { color:#1D5FA8; font-weight:700; font-size:13px; background:none; border:none; cursor:pointer; font-family:inherit; text-decoration:underline; }
+.sec-item { display:flex; gap:10px; padding:9px 0; border-bottom:1px solid #EEF3F1; font-size:13px; line-height:1.7; }
+.gps { width:100%; padding:13px; border:0; border-radius:11px; background:#1D5FA8; color:#fff; font-family:inherit; font-weight:700; font-size:14.5px; cursor:pointer; margin-bottom:9px; }
+.gps:disabled { opacity:.6; }
+.locrow { display:flex; gap:8px; }
+.locrow input { flex:1; }
+.locgo { padding:0 18px; border:0; border-radius:11px; background:#0E7A5F; color:#fff; font-family:inherit; font-weight:700; font-size:14px; cursor:pointer; height:49px; flex-shrink:0; }
+.locgo:disabled { background:#B9CCC5; }
+.locchip { display:flex; justify-content:space-between; align-items:center; background:#E3F3EC; border:1.5px solid #0E7A5F; border-radius:11px; padding:11px 13px; margin-bottom:12px; font-weight:700; font-size:13.5px; color:#0B4A3A; }
+.locchip button { border:0; background:#0E7A5F; color:#fff; border-radius:8px; padding:6px 12px; font-family:inherit; font-weight:700; font-size:12px; cursor:pointer; }
+.offline { background:#FBE9E9; border:1px solid #E2B4B4; color:#A33A3A; border-radius:12px; padding:11px 13px; font-size:12.5px; margin-bottom:14px; text-align:center; font-weight:700; }
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <button class="adm-link" onclick="go('admin')">⚙️ الإدارة</button>
+  <div class="logo">
+    <div class="cross"></div>
+    <div>
+      <h1>مراكو <span>PRO</span></h1>
+      <p>أقرب صيدلية فيها دواك — ولاية الخرطوم</p>
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button id="tab-client" onclick="go('client')">🔍 أبحث عن دواء</button>
+  <button id="tab-pharm" onclick="go('pharm')">💊 واجهة الصيدلي</button>
+</div>
+
+<div class="wrap" id="view"></div>
+<div id="imgmodal"></div>
+
+<script>
+// ═══════════════ Supabase — قاعدة البيانات (طلبات ويب عادية) ═══════════════
+const SB_URL = "https://uiburzeiqyvwlhetamuk.supabase.co";
+const SB_KEY = "sb_publishable_hiDmqGS0DbFzzpyPsGLM4g_zk2mt3_a";
+async function sb(path, options = {}) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 20000);
+  try {
+    const res = await fetch(SB_URL + "/rest/v1/" + path, {
+      ...options,
+      signal: ctrl.signal,
+      headers: {
+        "apikey": SB_KEY,
+        "Authorization": "Bearer " + SB_KEY,
+        "Content-Type": "application/json",
+        ...(options.headers || {}),
+      },
+    });
+    if (!res.ok) throw new Error("HTTP " + res.status + ": " + (await res.text()).slice(0, 200));
+    const txt = await res.text();
+    return txt ? JSON.parse(txt) : null;
+  } catch (e) {
+    if (e.name === "AbortError") throw new Error("timeout: الشبكة بطيئة أو تحجب الاتصال");
+    throw e;
+  } finally { clearTimeout(t); }
+}
+const sbGet = (p) => sb(p);
+const sbPost = (table, body, prefer = "return=minimal") =>
+  sb(table, { method: "POST", headers: { Prefer: prefer }, body: JSON.stringify(body) });
+const sbPatch = (p, body) =>
+  sb(p, { method: "PATCH", headers: { Prefer: "return=minimal" }, body: JSON.stringify(body) });
+const mapReq = (r) => ({ rid: r.id, pharmacyId: r.pharmacy_id, drug: r.drug, note: r.note,
+  address: r.address, area: r.area, photo: r.photo, isRx: r.is_rx,
+  clientName: r.client_name, clientPhone: r.client_phone,
+  status: r.status, date: r.date, time: r.time });
+
+// ═══════════════ البيانات الأولية (تُرفع للسحابة من لوحة الإدارة أول مرة) ═══════════════
+const SEED_PHARMACIES = [
+ {
+  "id": "p1",
+  "name": "صيدلية يونيفورم",
+  "phone": "0901744008",
+  "wa": "249901744008",
+  "lat": 15.553338,
+  "lng": 32.538453,
+  "area": "الخرطوم",
+  "map": "https://maps.app.goo.gl/KS2Y9G65xZcPcTei8"
+ },
+ {
+  "id": "p2",
+  "name": "صيدلية عزلة الطبية",
+  "phone": "0116359456",
+  "wa": "249116359456",
+  "lat": 15.538713,
+  "lng": 32.525578,
+  "area": "جبرة",
+  "map": "https://maps.app.goo.gl/XLBK2yMzFmgghW9c8"
+ },
+ {
+  "id": "p3",
+  "name": "صيدلية أوليف",
+  "phone": "0912329765",
+  "wa": "249912329765",
+  "lat": 15.571438,
+  "lng": 32.543187,
+  "area": "",
+  "map": "https://maps.app.goo.gl/nDcG8FGfRJU13xiu8"
+ },
+ {
+  "id": "p4",
+  "name": "صيدلية د. أحمد عثمان",
+  "phone": "0917870215",
+  "wa": "249917870215",
+  "lat": 15.544438,
+  "lng": 32.540312,
+  "area": "",
+  "map": "https://maps.app.goo.gl/3rkic7jYZyKR7t3Q9"
+ },
+ {
+  "id": "p5",
+  "name": "صيدلية زون 117",
+  "phone": "0924958664",
+  "wa": "249924958664",
+  "lat": null,
+  "lng": null,
+  "area": "الرياض - شارع 117",
+  "map": "https://maps.app.goo.gl/Mmt8GRps5aeEaNvZ8"
+ },
+ {
+  "id": "p6",
+  "name": "صيدلية أبو خالد",
+  "phone": "0122309827",
+  "wa": "249122309827",
+  "lat": 15.565188,
+  "lng": 32.546062,
+  "area": "",
+  "map": "https://maps.app.goo.gl/MqvqwmMrFt4P9YE16"
+ },
+ {
+  "id": "p7",
+  "name": "صيدلية أسيد",
+  "phone": "096168868",
+  "wa": "",
+  "lat": null,
+  "lng": null,
+  "area": "",
+  "map": ""
+ },
+ {
+  "id": "p8",
+  "name": "صيدلية الأثير",
+  "phone": "0912801554",
+  "wa": "249912801554",
+  "lat": 15.538187,
+  "lng": 32.551187,
+  "area": "",
+  "map": "https://maps.app.goo.gl/gDi2PejqPv6V5zRTA"
+ },
+ {
+  "id": "p9",
+  "name": "صيدلية الأحلام",
+  "phone": "0912355463",
+  "wa": "249912355463",
+  "lat": 15.548063,
+  "lng": 32.528063,
+  "area": "",
+  "map": "https://maps.app.goo.gl/ZvZnxya5e3HYuxwb8"
+ },
+ {
+  "id": "p10",
+  "name": "صيدلية الإدريسي",
+  "phone": "0912207009",
+  "wa": "249912207009",
+  "lat": null,
+  "lng": null,
+  "area": "",
+  "map": ""
+ },
+ {
+  "id": "p11",
+  "name": "صيدلية التويم",
+  "phone": "09121224236",
+  "wa": "",
+  "lat": 15.697938,
+  "lng": 32.522937,
+  "area": "بحري",
+  "map": "https://maps.app.goo.gl/uYUyRAVXMyXYwbii9"
+ },
+ {
+  "id": "p12",
+  "name": "صيدلية الراشدين",
+  "phone": "0925435080",
+  "wa": "249925435080",
+  "lat": 15.476938,
+  "lng": 32.533312,
+  "area": "",
+  "map": "https://maps.app.goo.gl/2issAqHG6bCDjQCZ6"
+ },
+ {
+  "id": "p13",
+  "name": "صيدلية السامراب",
+  "phone": "0912862671",
+  "wa": "249912862671",
+  "lat": 15.700687,
+  "lng": 32.521438,
+  "area": "السامراب - بحري",
+  "map": "https://maps.app.goo.gl/VpkVY2U1tjXn9cRp8"
+ },
+ {
+  "id": "p14",
+  "name": "صيدلية السلمة",
+  "phone": "0923046447",
+  "wa": "249923046447",
+  "lat": 15.448438,
+  "lng": 32.544062,
+  "area": "",
+  "map": "https://maps.app.goo.gl/JsSFDMccegKQ6QZLA"
+ },
+ {
+  "id": "p15",
+  "name": "صيدلية السديس",
+  "phone": "0993287586",
+  "wa": "249993287586",
+  "lat": 15.522563,
+  "lng": 32.554562,
+  "area": "",
+  "map": "https://maps.app.goo.gl/Xeht7w66sQ6m3PXY7"
+ },
+ {
+  "id": "p16",
+  "name": "صيدلية السيدة نعمة",
+  "phone": "0128444063",
+  "wa": "249128444063",
+  "lat": 15.558563,
+  "lng": 32.551187,
+  "area": "",
+  "map": "https://maps.app.goo.gl/zaKterNKVLYLYUhWA"
+ },
+ {
+  "id": "p17",
+  "name": "صيدلية السيسي",
+  "phone": "0912304697",
+  "wa": "249912304697",
+  "lat": 15.652238,
+  "lng": 32.612953,
+  "area": "بحري",
+  "map": "https://maps.app.goo.gl/RKFn5G35DQRLTXF28"
+ },
+ {
+  "id": "p18",
+  "name": "صيدلية الشرقي",
+  "phone": "0919999595",
+  "wa": "249919999595",
+  "lat": 15.550938,
+  "lng": 32.600563,
+  "area": "شرق النيل",
+  "map": "https://maps.app.goo.gl/b7LSCGxhidzT8RUJ9"
+ },
+ {
+  "id": "p19",
+  "name": "صيدلية العشرة",
+  "phone": "0906271457",
+  "wa": "249906271457",
+  "lat": 15.493063,
+  "lng": 32.565312,
+  "area": "",
+  "map": "https://maps.app.goo.gl/CPphLJ6ktx7fczyU6"
+ },
+ {
+  "id": "p20",
+  "name": "صيدلية الفاروق",
+  "phone": "0922578378",
+  "wa": "249922578378",
+  "lat": 15.509938,
+  "lng": 32.615063,
+  "area": "",
+  "map": "https://maps.app.goo.gl/ubmSW5QVAN1nfoUt7"
+ },
+ {
+  "id": "p21",
+  "name": "صيدلية الفاروق 2",
+  "phone": "0914449254",
+  "wa": "249914449254",
+  "lat": 15.520312,
+  "lng": 32.604187,
+  "area": "",
+  "map": "https://maps.app.goo.gl/htZ4u7Gzj7MxFzdS6"
+ },
+ {
+  "id": "p22",
+  "name": "صيدلية الفريق",
+  "phone": "0912587705",
+  "wa": "249912587705",
+  "lat": 15.598187,
+  "lng": 32.511937,
+  "area": "",
+  "map": "https://maps.app.goo.gl/v6jQ2ULgrJvSnMhE6"
+ },
+ {
+  "id": "p23",
+  "name": "صيدلية الكناري",
+  "phone": "0904078660",
+  "wa": "249904078660",
+  "lat": 15.532187,
+  "lng": 32.536062,
+  "area": "",
+  "map": "https://maps.app.goo.gl/h1KNttsWPG93fyci7"
+ },
+ {
+  "id": "p24",
+  "name": "صيدلية المالديف",
+  "phone": "0917338346",
+  "wa": "249917338346",
+  "lat": 15.551938,
+  "lng": 32.555937,
+  "area": "",
+  "map": "https://maps.app.goo.gl/3rDeb82kcNMCMLdq9"
+ },
+ {
+  "id": "p25",
+  "name": "صيدلية المتطورة",
+  "phone": "0913531731",
+  "wa": "249913531731",
+  "lat": 15.510813,
+  "lng": 32.549687,
+  "area": "",
+  "map": "https://maps.app.goo.gl/pRR9ur5v6GkYmH5bA"
+ },
+ {
+  "id": "p26",
+  "name": "صيدلية النخبة",
+  "phone": "0915533330",
+  "wa": "249915533330",
+  "lat": 15.570188,
+  "lng": 32.536312,
+  "area": "",
+  "map": "https://maps.app.goo.gl/VsArj2BzMBJKte4VA"
+ },
+ {
+  "id": "p27",
+  "name": "صيدلية أواصر",
+  "phone": "0126425808",
+  "wa": "249126425808",
+  "lat": 15.488187,
+  "lng": 32.544812,
+  "area": "",
+  "map": "https://maps.app.goo.gl/ZYNN5wsC3VATQQH1A"
+ },
+ {
+  "id": "p28",
+  "name": "صيدلية All in One",
+  "phone": "0911313699",
+  "wa": "249911313699",
+  "lat": null,
+  "lng": null,
+  "area": "شارع عبيد ختم",
+  "map": "https://maps.app.goo.gl/o3ywFYFW4niuEnei9"
+ },
+ {
+  "id": "p29",
+  "name": "صيدلية بايونير",
+  "phone": "0919398174",
+  "wa": "249919398174",
+  "lat": 15.529188,
+  "lng": 32.563312,
+  "area": "",
+  "map": "https://maps.app.goo.gl/fpkcathZt4RWL8Df9"
+ },
+ {
+  "id": "p30",
+  "name": "صيدلية برانكو",
+  "phone": "0909866939",
+  "wa": "249909866939",
+  "lat": 15.562438,
+  "lng": 32.520437,
+  "area": "",
+  "map": "https://maps.app.goo.gl/pVQzEYBga2wyp5Ch6"
+ },
+ {
+  "id": "p31",
+  "name": "صيدلية بلادي",
+  "phone": "0919509067",
+  "wa": "249919509067",
+  "lat": 15.517563,
+  "lng": 32.624063,
+  "area": "",
+  "map": "https://maps.app.goo.gl/5hTCSUfY14Rib2PZ8"
+ },
+ {
+  "id": "p32",
+  "name": "صيدلية ابن اليمان",
+  "phone": "0912935798",
+  "wa": "249912935798",
+  "lat": 15.546437,
+  "lng": 32.521687,
+  "area": "",
+  "map": "https://maps.app.goo.gl/BQghqYgXAUy3UjhRA"
+ },
+ {
+  "id": "p33",
+  "name": "صيدلية بيتنا",
+  "phone": "0123858998",
+  "wa": "249123858998",
+  "lat": 15.467187,
+  "lng": 32.542437,
+  "area": "",
+  "map": "https://maps.app.goo.gl/Jr27ZAMSbYHqqkkAA"
+ },
+ {
+  "id": "p34",
+  "name": "صيدلية جبرة الحديثة",
+  "phone": "0129313272",
+  "wa": "249129313272",
+  "lat": 15.536062,
+  "lng": 32.518187,
+  "area": "جبرة",
+  "map": "https://maps.app.goo.gl/1kbuMJJv8PZUnRZv5"
+ },
+ {
+  "id": "p35",
+  "name": "صيدلية د. سلمى",
+  "phone": "0114507175",
+  "wa": "249114507175",
+  "lat": 15.534438,
+  "lng": 32.530563,
+  "area": "",
+  "map": "https://maps.app.goo.gl/SShHzoswc1d6FVxA8"
+ },
+ {
+  "id": "p36",
+  "name": "صيدلية دار المفتي",
+  "phone": "0912460084",
+  "wa": "249912460084",
+  "lat": 15.550813,
+  "lng": 32.529563,
+  "area": "",
+  "map": "https://maps.app.goo.gl/WHXgb6GLXy8PqSUv7"
+ },
+ {
+  "id": "p37",
+  "name": "صيدلية ديدي",
+  "phone": "0912493203",
+  "wa": "249912493203",
+  "lat": 15.520563,
+  "lng": 32.567687,
+  "area": "",
+  "map": "https://maps.app.goo.gl/6Vsnfp2PmdRMLvd36"
+ },
+ {
+  "id": "p38",
+  "name": "صيدلية روسلين",
+  "phone": "0917775113",
+  "wa": "249917775113",
+  "lat": 15.576063,
+  "lng": 32.549812,
+  "area": "",
+  "map": "https://maps.app.goo.gl/DBKkFrj85A1gbWj97"
+ },
+ {
+  "id": "p39",
+  "name": "صيدلية رويال",
+  "phone": "0912600028",
+  "wa": "249912600028",
+  "lat": 15.514938,
+  "lng": 32.538688,
+  "area": "",
+  "map": "https://maps.app.goo.gl/e1und6VTwcm3Upw38"
+ },
+ {
+  "id": "p40",
+  "name": "صيدلية رويال كير",
+  "phone": "0114644148",
+  "wa": "249114644148",
+  "lat": null,
+  "lng": null,
+  "area": "",
+  "map": ""
+ },
+ {
+  "id": "p41",
+  "name": "صيدلية رودس",
+  "phone": "0122038098",
+  "wa": "249122038098",
+  "lat": 15.547562,
+  "lng": 32.556062,
+  "area": "",
+  "map": "https://maps.app.goo.gl/UKy4xo49nPeWruaH6"
+ },
+ {
+  "id": "p42",
+  "name": "صيدلية سدرة",
+  "phone": "0912164422",
+  "wa": "249912164422",
+  "lat": 15.554188,
+  "lng": 32.560687,
+  "area": "",
+  "map": "https://maps.app.goo.gl/bsiBZUxarG4cGTba6"
+ },
+ {
+  "id": "p43",
+  "name": "صيدلية سمارا",
+  "phone": "0911449464",
+  "wa": "249911449464",
+  "lat": 15.527063,
+  "lng": 32.613438,
+  "area": "",
+  "map": "https://maps.app.goo.gl/ptTV2aSCHQVKEPTb9"
+ },
+ {
+  "id": "p44",
+  "name": "صيدلية سند",
+  "phone": "0915490669",
+  "wa": "249915490669",
+  "lat": 15.497812,
+  "lng": 32.533938,
+  "area": "",
+  "map": "https://maps.app.goo.gl/XmbAzo2tkVqM7uuq8"
+ },
+ {
+  "id": "p45",
+  "name": "صيدلية سوبر كير",
+  "phone": "0123068660",
+  "wa": "249123068660",
+  "lat": 15.521812,
+  "lng": 32.549812,
+  "area": "",
+  "map": "https://maps.app.goo.gl/fJEgpgfmCX7r5A5c6"
+ },
+ {
+  "id": "p46",
+  "name": "صيدلية شارع جوبا",
+  "phone": "0912390756",
+  "wa": "249912390756",
+  "lat": 15.483313,
+  "lng": 32.551312,
+  "area": "",
+  "map": "https://maps.app.goo.gl/HcFFNgcPs7yWbbcV7"
+ },
+ {
+  "id": "p47",
+  "name": "صيدلية شلال",
+  "phone": "0996772261",
+  "wa": "249996772261",
+  "lat": 15.569688,
+  "lng": 32.530313,
+  "area": "",
+  "map": "https://maps.app.goo.gl/ANxtQx2aMAh3xfMD8"
+ },
+ {
+  "id": "p48",
+  "name": "صيدلية لورين",
+  "phone": "0927097507",
+  "wa": "249927097507",
+  "lat": 15.511563,
+  "lng": 32.556687,
+  "area": "",
+  "map": "https://maps.app.goo.gl/hnp4ph1nKG5rcXwN9"
+ },
+ {
+  "id": "p49",
+  "name": "صيدلية ولي العهد",
+  "phone": "0123447480",
+  "wa": "249123447480",
+  "lat": 15.593188,
+  "lng": 32.524437,
+  "area": "",
+  "map": "https://maps.app.goo.gl/j5ewFFLuebmmnzWz7"
+ },
+ {
+  "id": "p50",
+  "name": "صيدلية يونيفورم (فرع 2)",
+  "phone": "0901744008",
+  "wa": "249901744008",
+  "lat": 15.541187,
+  "lng": 32.597687,
+  "area": "",
+  "map": "https://maps.app.goo.gl/W2BTCcxxg2NWRMNx7"
+ },
+ {
+  "id": "p51",
+  "name": "صيدلية Corna",
+  "phone": "0118514133",
+  "wa": "249118514133",
+  "lat": 15.529438,
+  "lng": 32.543312,
+  "area": "",
+  "map": "https://maps.app.goo.gl/vAnzMxDqQ9YDdDoP6"
+ },
+ {
+  "id": "p52",
+  "name": "صيدلية وهبة",
+  "phone": "0127931541",
+  "wa": "249127931541",
+  "lat": null,
+  "lng": null,
+  "area": "الرابط المرسل يعود لصيدلية Corna",
+  "map": ""
+ },
+ {
+  "id": "p53",
+  "name": "صيدلية مقرسم",
+  "phone": "0115435780",
+  "wa": "249115435780",
+  "lat": 15.555688,
+  "lng": 32.534812,
+  "area": "",
+  "map": "https://maps.app.goo.gl/wpe4KJp8QQ3jfupW8"
+ },
+ {
+  "id": "p54",
+  "name": "صيدلية مضوي",
+  "phone": "0960047999",
+  "wa": "249960047999",
+  "lat": 15.502438,
+  "lng": 32.571188,
+  "area": "",
+  "map": "https://maps.app.goo.gl/VMdTv7ZCYbkzZj5o8"
+ },
+ {
+  "id": "p55",
+  "name": "صيدلية نهى",
+  "phone": "0901236199",
+  "wa": "249901236199",
+  "lat": 15.673788,
+  "lng": 32.494328,
+  "area": "الروضة - أم درمان",
+  "map": "https://maps.app.goo.gl/xdX7vw8Crndi3BMZ7"
+ }
+];
+
+const AREAS = [
+  { name: "العمارات", lat: 15.5636, lng: 32.5599 }, { name: "الرياض", lat: 15.5731, lng: 32.5764 },
+  { name: "بري", lat: 15.6011, lng: 32.5822 }, { name: "الخرطوم 2", lat: 15.5822, lng: 32.545 },
+  { name: "السوق العربي", lat: 15.5921, lng: 32.5299 }, { name: "جبرة", lat: 15.5231, lng: 32.5321 },
+  { name: "الصحافة", lat: 15.5344, lng: 32.5488 }, { name: "أركويت", lat: 15.5488, lng: 32.5677 },
+  { name: "المعمورة", lat: 15.5266, lng: 32.5744 }, { name: "الكلاكلة", lat: 15.4811, lng: 32.5122 },
+  { name: "اللاماب", lat: 15.5389, lng: 32.5211 }, { name: "الطائف", lat: 15.5711, lng: 32.5933 },
+  { name: "بحري - المزاد", lat: 15.6455, lng: 32.5322 }, { name: "بحري - السامراب", lat: 15.6899, lng: 32.5266 },
+  { name: "بحري - الحلفايا", lat: 15.6644, lng: 32.5455 }, { name: "أم درمان - الروضة", lat: 15.6733, lng: 32.4922 },
+  { name: "أم درمان - العرضة", lat: 15.6355, lng: 32.4788 }, { name: "أم درمان - الثورة", lat: 15.6633, lng: 32.4611 },
+];
+
+// ═══════════════ أدوات ═══════════════
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s || "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const today = () => new Date().toISOString().slice(0, 10);
+const nowTime = () => new Date().toLocaleTimeString("ar-SD", { hour: "2-digit", minute: "2-digit" });
+function distKm(a, b) {
+  const R = 6371, dLat = (b.lat - a.lat) * Math.PI / 180, dLng = (b.lng - a.lng) * Math.PI / 180;
+  const s = Math.sin(dLat/2)**2 + Math.cos(a.lat*Math.PI/180) * Math.cos(b.lat*Math.PI/180) * Math.sin(dLng/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(s), Math.sqrt(1-s));
+}
+const OLC_A = "23456789CFGHJMPQRVWX";
+function olcEncode(lat, lng, len = 10) {
+  let la = lat + 90, lo = lng + 180, code = "", res = 20;
+  for (let i = 0; i < len/2; i++) { code += OLC_A[Math.floor(la/res)] + OLC_A[Math.floor(lo/res)]; la %= res; lo %= res; res /= 20; }
+  return code;
+}
+function olcDecode(code) {
+  code = code.toUpperCase().replace("+", "");
+  let lat = -90, lng = -180, res = 20;
+  for (let i = 0; i + 1 < Math.min(code.length, 10); i += 2) { lat += OLC_A.indexOf(code[i]) * res; lng += OLC_A.indexOf(code[i+1]) * res; res /= 20; }
+  res *= 20;
+  if (code.length > 10) { const g = OLC_A.indexOf(code[10]); lat += Math.floor(g/4) * (res/5); lng += (g%4) * (res/4); return { lat: lat + res/10, lng: lng + res/8 }; }
+  return { lat: lat + res/2, lng: lng + res/2 };
+}
+function parseLocation(text) {
+  text = (text || "").trim();
+  const m = text.match(/(-?\d{1,2}\.\d+)[,\s]+(-?\d{1,3}\.\d+)/);
+  if (m) return { lat: parseFloat(m[1]), lng: parseFloat(m[2]) };
+  const pm = text.match(/([23456789CFGHJMPQRVWX]{2,8}\+[23456789CFGHJMPQRVWX]{2,3})/i);
+  if (pm) {
+    let code = pm[1].toUpperCase();
+    const before = code.split("+")[0];
+    if (before.length < 8) code = olcEncode(15.58, 32.53, 10).slice(0, 8 - before.length) + code;
+    return olcDecode(code);
+  }
+  return null;
+}
+const inKhartoum = (c) => c && c.lat > 15.2 && c.lat < 15.95 && c.lng > 32.2 && c.lng < 32.85;
+function withTimeout(promise, ms) {
+  return Promise.race([
+    promise,
+    new Promise((_, rej) => setTimeout(() => rej(new Error("timeout: العملية تجاوزت " + (ms/1000) + " ثانية — الشبكة بطيئة أو تحجب الاتصال")), ms)),
+  ]);
+}
+const store = {
+  get: (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e) { return d; } },
+  set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} },
+};
+
+const STATUS = {
+  pending: { label: "بانتظار رد الصيدلية", color: "#B96A00", bg: "#FDF1DE" },
+  available: { label: "الدواء متوفر ✓", color: "#0E7A5F", bg: "#E3F3EC" },
+  unavailable: { label: "غير متوفر", color: "#A33A3A", bg: "#FBE9E9" },
+  delivering: { label: "في الطريق إليك 🛵", color: "#1D5FA8", bg: "#E6F0FB" },
+};
+
+// ═══════════════ الحالة العامة ═══════════════
+let mode = "client";
+let ALL = [];                 // الصيدليات من السحابة
+let profile = store.get("mraco-profile", null);
+let pharmProfile = store.get("mraco-pharm", null);
+let customLoc = null, area = "", drug = "", note = "", address = "", photo = null, isRx = false;
+let selected = [], showAll = false, sentToast = false;
+let myRequests = [], incoming = [], unsubClient = null, unsubPharm = null;
+let adminOk = false, apps = [], shifts = [], allReqs = [];
+
+// ═══════════════ تحميل الصيدليات من السحابة ═══════════════
+async function loadPharmacies() {
+  ALL = SEED_PHARMACIES;
+  render();
+  try {
+    const rows = await sbGet("pharmacies?select=*&order=id");
+    if (rows && rows.length > 0) { ALL = rows; render(); }
+  } catch (e) { console.log("cloud load failed:", e && e.message); }
+}
+
+// ═══════════════ التنقل ═══════════════
+function go(m) {
+  mode = m; sentToast = false;
+  if (unsubClient) { clearInterval(unsubClient); unsubClient = null; }
+  if (unsubPharm) { clearInterval(unsubPharm); unsubPharm = null; }
+  render();
+}
+
+// ═══════════════ العرض ═══════════════
+function render() {
+  $("tab-client").className = mode === "client" ? "on" : "";
+  $("tab-pharm").className = mode === "pharm" ? "on" : "";
+  if (mode === "client") renderClient();
+  else if (mode === "pharm") renderPharm();
+  else renderAdmin();
+}
+
+function renderClient() {
+  const v = $("view");
+  if (!profile) {
+    v.innerHTML = `
+      <div class="card">
+        <h2>مرحباً بك في مراكو برو 👋</h2>
+        <div class="hint" style="text-align:right;margin:0 0 12px">سجّل مرة واحدة فقط ليعرف الصيدلي من يتواصل معه ويوصل طلبك بثقة.</div>
+        <label>اسمك</label><input id="rn" placeholder="الاسم الكامل">
+        <label>رقم هاتفك</label><input id="rp" placeholder="09XXXXXXXX" inputmode="tel">
+        <button class="btn" onclick="registerClient()">تسجيل الدخول</button>
+      </div>`;
+    return;
+  }
+  const userLoc = customLoc || AREAS.find((a) => a.name === area);
+  const withCoords = ALL.filter((p) => p.lat);
+  const nearby = userLoc ? withCoords.map((p) => ({ ...p, dist: distKm(userLoc, p) })).sort((a,b) => a.dist - b.dist) : [];
+  const shown = showAll ? nearby : nearby.slice(0, 8);
+
+  v.innerHTML = `
+    ${sentToast ? `<div class="toast">✓ تم إرسال طلبك يا ${esc(profile.name.split(" ")[0])}! تابع حالته أدناه.</div>` : ""}
+    <div class="card">
+      <h2>ما الدواء الذي تبحث عنه؟</h2>
+      <label>موقعك</label>
+      ${customLoc ? `
+        <div class="locchip"><span>✓ ${esc(customLoc.label)}</span><button onclick="clearLoc()">تغيير</button></div>
+      ` : `
+        <button class="gps" id="gpsbtn" onclick="useGPS()">📍 حدد موقعي تلقائياً (GPS)</button>
+        <div class="locrow">
+          <input id="locin" placeholder="أو الصق موقعك من خرائط قوقل" style="margin-bottom:0">
+          <button class="locgo" onclick="applyLoc()">تحديد</button>
+        </div>
+        <div class="hint" style="text-align:right;margin:6px 0 10px">من خرائط قوقل: اضغط مطولاً على موقعك ← انسخ الإحداثيات أو رمز الموقع (مثل HG3Q+89) والصقه هنا</div>
+        <label>أو اختر الحي يدوياً</label>
+        <select id="areasel" onchange="area=this.value;render()">
+          <option value="">— اختر الحي —</option>
+          ${AREAS.map((a) => `<option ${a.name === area ? "selected" : ""}>${a.name}</option>`).join("")}
+        </select>
+      `}
+      <label>ابحث بالاسم أو بالصورة 📷</label>
+      <div class="drugrow">
+        <input id="drugin" placeholder="اسم الدواء: Amoxicillin 500mg" value="${esc(drug)}" oninput="drug=this.value">
+        <label class="camb">📷<input type="file" accept="image/*" onchange="handlePhoto(event)" style="display:none"></label>
+      </div>
+      ${photo ? `
+        <div class="photo-row">
+          <img class="thumb" src="${photo}" onclick="viewImg('${"_photo_"}')">
+          <div style="flex:1"><button class="rm" onclick="photo=null;render()">إزالة الصورة</button></div>
+        </div>` : ""}
+      <label>ملاحظة (اختياري)</label>
+      <input id="notein" placeholder="مثال: شراب للأطفال" value="${esc(note)}" oninput="note=this.value">
+      <label>عنوانك للتوصيل</label>
+      <textarea id="addrin" rows="2" placeholder="الحي، الشارع، أقرب معلم" oninput="address=this.value">${esc(address)}</textarea>
+      <label class="chk"><input type="checkbox" ${isRx ? "checked" : ""} onchange="isRx=this.checked"> دواء يُصرف بروشتة / تأمين (الروشتة المختومة مرفقة بالصورة)</label>
+    </div>
+
+    ${userLoc ? `
+      <div class="card">
+        <h2>أقرب الصيدليات إليك</h2>
+        <div class="hint">اختر حتى 3 صيدليات • 🗺️ الموقع • 💬 واتساب</div>
+        ${shown.map((p) => `
+          <div class="ph ${selected.includes(p.id) ? "sel" : ""}" onclick="toggleSel('${p.id}')">
+            <div class="info"><div class="nm">${esc(p.name)}</div>${p.area ? `<div class="ar">${esc(p.area)}</div>` : ""}</div>
+            <span class="dist">${p.dist < 1 ? Math.round(p.dist*1000) + " م" : p.dist.toFixed(1) + " كم"}</span>
+            ${p.map ? `<a class="ico mp" href="${esc(p.map)}" target="_blank" onclick="event.stopPropagation()">🗺️</a>` : ""}
+            ${p.wa ? `<a class="ico wa" href="${waLink(p)}" target="_blank" onclick="event.stopPropagation()">💬</a>` : ""}
+          </div>`).join("")}
+        ${!showAll && nearby.length > 8 ? `<button class="more" onclick="showAll=true;render()">عرض كل الصيدليات (${nearby.length})</button>` : ""}
+        <button class="btn" id="sendbtn" onclick="sendRequest()">إرسال الطلب ${selected.length ? "(" + selected.length + ")" : ""}</button>
+        <div class="hint">أكمل اسم الدواء والعنوان واختر صيدلية واحدة على الأقل</div>
+      </div>` : ""}
+
+    <div id="myreqs"></div>`;
+
+  pollClientRequests();
+}
+
+async function fetchClientRequests() {
+  if (!profile) return;
+  try {
+    const rows = await sbGet("requests?client_phone=eq." + encodeURIComponent(profile.phone) + "&order=created.desc&limit=15");
+    myRequests = rows.map(mapReq);
+  } catch (e) { return; }
+  const el = $("myreqs");
+  if (!el) return;
+  el.innerHTML = myRequests.length === 0 ? "" : `
+    <div class="card"><h2>طلباتي</h2>
+    ${myRequests.map((r) => {
+      const p = ALL.find((x) => x.id === r.pharmacyId), s = STATUS[r.status] || STATUS.pending;
+      return `<div class="card req" style="margin-bottom:9px">
+        <div class="top"><div><div class="drug">${esc(r.drug)} ${r.photo ? "📎" : ""}</div>
+        <div class="meta">${esc(p ? p.name : "")}${r.isRx ? " • روشتة" : ""}</div></div>
+        <span class="badge" style="color:${s.color};background:${s.bg}">${s.label}</span></div>
+        <div class="time">أُرسل ${esc(r.date)} الساعة ${esc(r.time)}</div></div>`;
+    }).join("")}</div>`;
+}
+function pollClientRequests() {
+  if (unsubClient) return;
+  fetchClientRequests();
+  unsubClient = setInterval(fetchClientRequests, 15000);
+}
+
+function registerClient() {
+  const n = $("rn").value.trim(), p = $("rp").value.trim();
+  if (!n || p.length < 9) { alert("أكمل الاسم ورقم الهاتف"); return; }
+  profile = { name: n, phone: p };
+  store.set("mraco-profile", profile);
+  render();
+}
+
+function clearLoc() { customLoc = null; render(); }
+function useGPS() {
+  if (!navigator.geolocation) { alert("جهازك لا يدعم تحديد الموقع"); return; }
+  $("gpsbtn").textContent = "⏳ جارٍ تحديد موقعك...";
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const c = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+      if (!inKhartoum(c)) { alert("موقعك خارج نطاق ولاية الخرطوم"); render(); return; }
+      customLoc = { ...c, label: "موقعي الحالي (GPS) 📍" }; render();
+    },
+    () => { alert("تعذّر تحديد الموقع — فعّل GPS أو استخدم الطرق الأخرى"); render(); },
+    { enableHighAccuracy: true, timeout: 10000 });
+}
+function applyLoc() {
+  const t = $("locin").value;
+  const c = parseLocation(t);
+  if (!c) { alert("لم أفهم الموقع — الصق الإحداثيات (15.5533, 32.5384) أو رمز Plus Code (HG3Q+89)"); return; }
+  if (!inKhartoum(c)) { alert("هذا الموقع خارج نطاق ولاية الخرطوم"); return; }
+  customLoc = { ...c, label: "موقع من الخريطة (" + t.trim().slice(0, 20) + ")" };
+  render();
+}
+function toggleSel(id) {
+  selected = selected.includes(id) ? selected.filter((x) => x !== id) : (selected.length < 3 ? [...selected, id] : selected);
+  render();
+}
+function handlePhoto(e) {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    const img = new Image();
+    img.onload = () => {
+      const max = 600, scale = Math.min(1, max / Math.max(img.width, img.height));
+      const cv = document.createElement("canvas");
+      cv.width = Math.round(img.width * scale); cv.height = Math.round(img.height * scale);
+      cv.getContext("2d").drawImage(img, 0, 0, cv.width, cv.height);
+      photo = cv.toDataURL("image/jpeg", 0.6);
+      render();
+    };
+    img.src = reader.result;
+  };
+  reader.readAsDataURL(file);
+}
+function viewImg(src) {
+  const s = src === "_photo_" ? photo : src;
+  $("imgmodal").innerHTML = `<div class="modal" onclick="this.parentNode.innerHTML=''"><img src="${s}"></div>`;
+}
+function waLink(p) {
+  const msg = encodeURIComponent("السلام عليكم، أبحث عن دواء: " + (drug || "...") + (note ? "\nملاحظة: " + note : "") + "\nعنواني: " + (address || area || "...") + "\n(عبر تطبيق مراكو برو Mraco Pro)");
+  return "https://wa.me/" + p.wa + "?text=" + msg;
+}
+async function sendRequest() {
+  if (!drug.trim() || !address.trim() || selected.length === 0) { alert("أكمل اسم الدواء والعنوان واختر صيدلية"); return; }
+  $("sendbtn").disabled = true;
+  try {
+    const rows = selected.map((pid) => ({
+      pharmacy_id: pid, drug: drug.trim(), note: note.trim(), address: address.trim(),
+      area: area || (customLoc ? customLoc.label : ""), photo: photo || null, is_rx: isRx,
+      client_name: profile.name, client_phone: profile.phone,
+      status: "pending", date: today(), time: nowTime(),
+    }));
+    await sbPost("requests", rows);
+    selected = []; photo = null; isRx = false; sentToast = true;
+    render();
+  } catch (e) { alert("تعذّر الإرسال: " + (e.message || e)); $("sendbtn").disabled = false; }
+}
+
+// ═══════════════ واجهة الصيدلي ═══════════════
+function renderPharm() {
+  const v = $("view");
+  if (!pharmProfile) {
+    v.innerHTML = `
+      <div class="card">
+        <h2>تسجيل الصيدلية 💊</h2>
+        <label>اختر صيدليتك من القائمة</label>
+        <select id="claim"><option value="">— ابحث عن صيدليتك —</option>
+          ${ALL.map((p) => `<option value="${p.id}">${esc(p.name)}${p.area ? " — " + esc(p.area) : ""}</option>`).join("")}
+        </select>
+        <label>اسم المسؤول</label><input id="pn" placeholder="اسم الصيدلي / المالك">
+        <label>رقم الهاتف (للتحقق)</label><input id="pp" placeholder="09XXXXXXXX" inputmode="tel">
+        <button class="btn" onclick="claimPharm()">هذه صيدليتي — تسجيل</button>
+        <div class="hint">صيدليتك غير موجودة؟ <button class="link-a" onclick="renderJoin()">قدّم طلب انضمام</button></div>
+      </div>`;
+    return;
+  }
+  const me = ALL.find((p) => p.id === pharmProfile.pharmacyId);
+  v.innerHTML = `
+    <div class="card">
+      <h2>📊 لوحة ${esc(me ? me.name : "")}</h2>
+      <div class="stats" id="pstats"></div>
+      <button class="btn blue" onclick="endShift()">🕐 إنهاء الشفت وحفظ تقرير اليوم</button>
+      <div id="shiftlist" style="margin-top:12px"></div>
+      <div class="hint"><button class="link-a" onclick="pharmProfile=null;store.set('mraco-pharm',null);go('pharm')">تسجيل خروج</button></div>
+    </div>
+    <div id="inreqs"><div class="card empty"><div class="big">⏳</div>جارٍ تحميل الطلبات...</div></div>`;
+  pollPharm();
+  loadShifts();
+}
+
+function claimPharm() {
+  const id = $("claim").value, n = $("pn").value.trim(), p = $("pp").value.trim();
+  if (!id || !n || p.length < 9) { alert("أكمل كل الحقول"); return; }
+  pharmProfile = { pharmacyId: id, name: n, phone: p };
+  store.set("mraco-pharm", pharmProfile);
+  render();
+}
+
+async function fetchIncoming() {
+  if (!pharmProfile) return;
+  try {
+    const rows = await sbGet("requests?pharmacy_id=eq." + encodeURIComponent(pharmProfile.pharmacyId) + "&order=created.desc&limit=40");
+    incoming = rows.map(mapReq);
+  } catch (e) {
+    const el0 = $("inreqs");
+    if (el0 && incoming.length === 0) el0.innerHTML = `<div class="offline">⚠️ تعذّر تحميل الطلبات — تحقق من الإنترنت</div>`;
+    return;
+  }
+  const t = incoming.filter((r) => r.date === today());
+  const stats = {
+    total: t.length,
+    confirmed: t.filter((r) => r.status === "available" || r.status === "delivering").length,
+    delivered: t.filter((r) => r.status === "delivering").length,
+  };
+  const ps = $("pstats");
+  if (ps) ps.innerHTML = `
+    <div class="stat"><div class="n">${stats.total}</div><div class="l">طلبات اليوم</div></div>
+    <div class="stat"><div class="n">${stats.confirmed}</div><div class="l">مؤكدة</div></div>
+    <div class="stat"><div class="n">${stats.delivered}</div><div class="l">مبيعات ✓</div></div>
+    <div class="stat"><div class="n">${stats.total ? Math.round(stats.confirmed/stats.total*100) : 0}%</div><div class="l">نسبة التوفر</div></div>`;
+  const el = $("inreqs");
+  if (!el) return;
+  el.innerHTML = incoming.length === 0
+    ? `<div class="card empty"><div class="big">📭</div>لا توجد طلبات واردة بعد.</div>`
+    : incoming.map((r) => {
+      const s = STATUS[r.status] || STATUS.pending;
+      return `<div class="card req">
+        <div class="top"><div><div class="drug">💊 ${esc(r.drug)}</div>
+        ${r.note ? `<div class="meta">ملاحظة: ${esc(r.note)}</div>` : ""}</div>
+        <span class="badge" style="color:${s.color};background:${s.bg}">${s.label}</span></div>
+        <div class="meta">👤 ${esc(r.clientName || "عميل")} — ${esc(r.clientPhone || "")}</div>
+        <div class="meta">📍 العنوان: ${esc(r.address)} (${esc(r.area)})</div>
+        ${r.isRx ? `<span class="badge rx">🩺 روشتة / تأمين مرفقة</span>` : ""}
+        ${r.photo ? `<img class="thumb big" src="${r.photo}" onclick="viewImgSrc('${r.rid}')">` : ""}
+        <div class="time">وصل ${esc(r.date)} الساعة ${esc(r.time)}</div>
+        ${r.status === "pending" ? `<div class="acts">
+          <button class="ok" onclick="setStatus('${r.rid}','available')">✓ متوفر عندنا</button>
+          <button class="no" onclick="setStatus('${r.rid}','unavailable')">غير متوفر</button></div>` : ""}
+        ${r.status === "available" ? `<div class="acts">
+          <button class="go" onclick="setStatus('${r.rid}','delivering')">🛵 تم إرسال الطلب للتوصيل</button></div>` : ""}
+      </div>`;
+    }).join("");
+}
+function pollPharm() {
+  if (unsubPharm) return;
+  fetchIncoming();
+  unsubPharm = setInterval(fetchIncoming, 12000);
+}
+
+function viewImgSrc(rid) {
+  const r = incoming.find((x) => x.rid === rid);
+  if (r && r.photo) viewImg(r.photo);
+}
+async function setStatus(rid, status) {
+  try { await sbPatch("requests?id=eq." + rid, { status }); fetchIncoming(); }
+  catch (e) { alert("تعذّر التحديث: " + (e.message || e)); }
+}
+
+async function endShift() {
+  const t = incoming.filter((r) => r.date === today());
+  try {
+    await sbPost("shifts", { pharmacy_id: pharmProfile.pharmacyId, date: today(), time: nowTime(),
+      total: t.length,
+      confirmed: t.filter((r) => r.status === "available" || r.status === "delivering").length,
+      delivered: t.filter((r) => r.status === "delivering").length });
+    alert("تم حفظ تقرير الشفت ✓");
+    loadShifts();
+  } catch (e) { alert("تعذّر الحفظ: " + (e.message || e)); }
+}
+async function loadShifts() {
+  try {
+    const list = await sbGet("shifts?pharmacy_id=eq." + encodeURIComponent(pharmProfile.pharmacyId) + "&order=created.desc&limit=7");
+    const el = $("shiftlist");
+    if (el && list.length) el.innerHTML = `<label>تقارير الشفتات السابقة</label>` +
+      list.map((s) => `<div class="shift"><span>${esc(s.date)} — ${esc(s.time)}</span><span><b>${s.delivered}</b> مبيعات من <b>${s.total}</b> طلبات</span></div>`).join("");
+  } catch (e) {}
+}
+
+// ═══════════════ طلب انضمام صيدلية ═══════════════
+function renderJoin() {
+  $("view").innerHTML = `
+    <div class="card">
+      <h2>طلب انضمام صيدلية جديدة</h2>
+      <label>اسم الصيدلية</label><input id="jn" placeholder="بدون كلمة صيدلية">
+      <label>رقم الهاتف</label><input id="jp" placeholder="09XXXXXXXX" inputmode="tel">
+      <label>الحي / المنطقة</label><input id="ja" placeholder="مثال: بحري - الحلفايا">
+      <label>رابط الموقع من خرائط قوقل (اختياري)</label><input id="jl" placeholder="https://maps.app.goo.gl/...">
+      <button class="btn" onclick="submitJoin()">إرسال طلب الانضمام</button>
+      <div class="hint"><button class="link-a" onclick="go('pharm')">→ رجوع للتسجيل</button></div>
+    </div>`;
+}
+async function submitJoin() {
+  const n = $("jn").value.trim(), p = $("jp").value.trim();
+  if (!n || p.length < 9) { alert("أكمل الاسم ورقم الهاتف"); return; }
+  try {
+    await sbPost("applications", { name: n, phone: p, area: $("ja").value.trim(), link: $("jl").value.trim(), status: "pending", date: today() });
+    alert("✓ تم إرسال طلبك! ستتم مراجعته والتواصل معك.");
+    go("pharm");
+  } catch (e) { alert("تعذّر الإرسال: " + (e.message || e)); }
+}
+
+// ═══════════════ لوحة الإدارة ═══════════════
+function renderAdmin() {
+  const v = $("view");
+  if (!adminOk) {
+    v.innerHTML = `
+      <div class="card"><h2>🔐 دخول الإدارة</h2>
+        <label>الرقم السري</label>
+        <input id="pinin" type="password" placeholder="••••" inputmode="numeric">
+        <button class="btn" onclick="tryPin()">دخول</button></div>`;
+    return;
+  }
+  v.innerHTML = `<div class="card empty"><div class="big">⏳</div>جارٍ تحميل البيانات...</div>`;
+  loadAdmin();
+}
+function tryPin() {
+  const saved = store.get("mraco-pin", "2389");
+  if ($("pinin").value === saved) { adminOk = true; render(); }
+  else alert("رقم سري خاطئ");
+}
+async function loadAdmin() {
+  try {
+    const [rs, as] = await Promise.all([
+      sbGet("requests?select=pharmacy_id,date"),
+      sbGet("applications?select=*&order=created.desc"),
+    ]);
+    allReqs = rs.map((r) => ({ pharmacyId: r.pharmacy_id, date: r.date }));
+    apps = as.map((a) => ({ ...a, aid: a.id }));
+  } catch (e) { $("view").innerHTML = `<div class="offline">⚠️ تعذّر تحميل البيانات: ${esc(e.message || e)}</div>`; return; }
+
+  const todayR = allReqs.filter((r) => r.date === today());
+  const act = {};
+  allReqs.forEach((r) => { act[r.pharmacyId] = (act[r.pharmacyId] || 0) + 1; });
+  const top = Object.entries(act).sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const pending = apps.filter((a) => a.status === "pending");
+  const seeded = ALL.length > 0 && ALL !== SEED_PHARMACIES && ALL[0] && true;
+
+  $("view").innerHTML = `
+    <div class="card">
+      <h2>📈 نشاط التطبيق (كل المستخدمين)</h2>
+      <div class="stats">
+        <div class="stat"><div class="n">${todayR.length}</div><div class="l">طلبات اليوم</div></div>
+        <div class="stat"><div class="n">${allReqs.length}</div><div class="l">إجمالي الطلبات</div></div>
+        <div class="stat"><div class="n">${ALL.length}</div><div class="l">الصيدليات</div></div>
+        <div class="stat"><div class="n">${pending.length}</div><div class="l">طلبات انضمام</div></div>
+      </div>
+      ${top.length ? `<label>أنشط الصيدليات (بعدد الطلبات)</label>` +
+        top.map(([pid, n]) => { const p = ALL.find((x) => x.id === pid);
+          return `<div class="shift"><span>${esc(p ? p.name : pid)}</span><b>${n} طلب</b></div>`; }).join("") : ""}
+    </div>
+
+    <div class="card">
+      <h2>☁️ قاعدة البيانات</h2>
+      <button class="btn" onclick="seedPharmacies()">⬆️ رفع قاعدة الصيدليات (${SEED_PHARMACIES.length}) للسحابة</button>
+      <button class="btn blue" style="margin-top:8px" onclick="testWrite()">🔬 اختبار الاتصال والكتابة</button>
+      <div class="hint">اضغطه مرة واحدة فقط بعد إنشاء المشروع — يرفع كل صيدلياتك لقاعدة البيانات</div>
+    </div>
+
+    <div class="card">
+      <h2>🏪 طلبات انضمام الصيدليات</h2>
+      ${apps.length === 0 ? `<div class="empty">لا توجد طلبات انضمام بعد.</div>` :
+        apps.map((a) => `
+          <div class="card req" style="margin-bottom:9px">
+            <div class="top"><div><div class="drug">صيدلية ${esc(a.name)}</div>
+            <div class="meta">📞 ${esc(a.phone)} — 📍 ${esc(a.area || "غير محدد")}</div></div>
+            <span class="badge" style="${a.status === "approved" ? "color:#0E7A5F;background:#E3F3EC" : a.status === "rejected" ? "color:#A33A3A;background:#FBE9E9" : "color:#B96A00;background:#FDF1DE"}">
+              ${a.status === "approved" ? "مقبولة ✓" : a.status === "rejected" ? "مرفوضة" : "قيد المراجعة"}</span></div>
+            ${a.status === "pending" ? `<div class="acts">
+              <button class="ok" onclick="decideApp('${a.aid}',true)">✓ قبول وإضافة</button>
+              <button class="no" onclick="decideApp('${a.aid}',false)">رفض</button></div>` : ""}
+          </div>`).join("")}
+    </div>
+
+    <div class="card">
+      <h2>🛡️ الأمن — حماية بياناتك</h2>
+      <div class="sec-item"><span>✅</span><span><b>الأرقام مخفية:</b> لا تظهر في الواجهة — تواصل بالأزرار فقط.</span></div>
+      <div class="sec-item"><span>✅</span><span><b>تسجيل إجباري</b> قبل أي استخدام.</span></div>
+      <div class="sec-item"><span>⚠️</span><span><b>مهم:</b> قاعدة البيانات في وضع تجريبي مفتوح لمدة 30 يوماً — اطلب مني قواعد الأمان النهائية قبل انتهائها.</span></div>
+      <label style="margin-top:12px">تغيير الرقم السري للإدارة (لهذا الجهاز)</label>
+      <input id="npin" type="password" placeholder="رقم سري جديد">
+      <button class="btn" onclick="changePin()">حفظ الرقم الجديد</button>
+      <div class="hint"><button class="link-a" onclick="adminOk=false;go('client')">خروج من الإدارة</button></div>
+    </div>`;
+}
+function changePin() {
+  const np = $("npin").value;
+  if (np.length < 4) { alert("الرقم قصير — 4 خانات على الأقل"); return; }
+  store.set("mraco-pin", np);
+  alert("تم تغيير الرقم السري ✓");
+}
+async function seedPharmacies() {
+  if (!confirm("رفع " + SEED_PHARMACIES.length + " صيدلية لقاعدة البيانات السحابية؟")) return;
+  const btn = document.querySelector(".btn[onclick='seedPharmacies()']");
+  if (btn) btn.textContent = "⏳ جارٍ الرفع...";
+  try {
+    await sbPost("pharmacies?on_conflict=id", SEED_PHARMACIES, "return=minimal,resolution=merge-duplicates");
+    alert("✓ تم رفع كل الصيدليات بنجاح! (" + SEED_PHARMACIES.length + " صيدلية)");
+    await loadPharmacies();
+  } catch (e) {
+    alert("فشل الرفع:\n" + (e.message || e) + "\n\nصوّر هذه الرسالة وأرسلها لكلود.");
+  }
+  if (btn) btn.textContent = "⬆️ رفع قاعدة الصيدليات (" + SEED_PHARMACIES.length + ") للسحابة";
+}
+async function testWrite() {
+  try {
+    await sbPost("pharmacies?on_conflict=id", [SEED_PHARMACIES[0]], "return=minimal,resolution=merge-duplicates");
+    alert("✓ اختبار الكتابة نجح! قاعدة البيانات تعمل بشكل كامل.");
+  } catch (e) {
+    alert("✗ اختبار الكتابة فشل:\n" + (e.message || e) + "\n\nصوّر هذه الرسالة وأرسلها لكلود.");
+  }
+}
+
+async function decideApp(aid, ok) {
+  try {
+    await sbPatch("applications?id=eq." + aid, { status: ok ? "approved" : "rejected" });
+    if (ok) {
+      const a = apps.find((x) => x.aid === aid);
+      await sbPost("pharmacies", [{ id: "x" + Date.now(), name: "صيدلية " + a.name, phone: a.phone,
+        wa: a.phone.length === 10 && a.phone.startsWith("0") ? "249" + a.phone.slice(1) : "",
+        lat: null, lng: null, area: a.area || "", map: a.link || "" }]);
+      await loadPharmacies();
+    }
+    renderAdmin();
+  } catch (e) { alert("تعذّر التنفيذ: " + (e.message || e)); }
+}
+
+// ═══════════════ التشغيل ═══════════════
+loadPharmacies();
+</script>
+</body>
+</html>
